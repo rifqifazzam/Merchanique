@@ -14,7 +14,7 @@
         {% for c in categorie %}
         <div class="categorie">
             <img src="{{c.image.url}}" alt="" class="categorie_img">
-            <a href="" class="categorie_name" > {{c.name}}</a>
+            <a href="{% url 'category'  %}" class="categorie_name" > {{c.name}}</a>
         </div>
         {% endfor %}
   </div> 

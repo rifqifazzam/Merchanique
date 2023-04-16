@@ -62,10 +62,12 @@ def product_detail(request):
 
 def product_category(request):
     # make this a page of item per category
-    products = Product.objects.all()
     categorie = Categorie.objects.all()
+    products = Product.objects.all()
+    
     context = {
         'product': products,
         'categorie': categorie,
     }
     return render(request, 'product_category.html', context)
+
