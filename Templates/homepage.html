@@ -19,19 +19,5 @@
         {% endfor %}
   </div> 
 
-
-  {% comment %} <h1>Products</h1>
-  <div class="products">
-    {% for p in product %}
-    <div class="product">
-      <div class="image-container">
-        <img src="{{ p.image.url }}" alt="" class="product_img">
-      </div>
-      <p class="name">{{ p.name }}</p>
-      <p class="price">Rp{{ p.price }}</p>
-      <a href="product_detail">detail</a>
-    </div>
-    {% endfor %} {% endcomment %}
-
 </div>
 {% endblock content%}
