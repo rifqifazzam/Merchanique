@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock title %}
+{% block content %}
+    <h1>Masuk</h1>
+    <p>Belum punya akun? <a href="{% url 'register'%}">Register</a></p>
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="text" name="username" placeholder="username">
+        <input type="password" name="password" placeholder="password">
+        <input type="submit" value="login">
+    </form>
+{% endblock content %}
