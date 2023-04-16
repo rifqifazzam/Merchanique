@@ -1,0 +1,22 @@
+{% extends 'base.html'%}
+{% block title %}Category{% endblock title %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static '/product_categories.css' %}">
+
+{% include 'navbar.html' %}
+
+<div class="container">
+    
+    <h1>This is Product Per Category page</h1>
+    {% comment %} <div class="categories">
+        {% for c in categorie %}
+        <div class="categorie">
+            <img src="{{c.image.url}}" alt="" class="categorie_img">
+            <a href="" class="categorie_name"> {{c.name}}</a>
+        </div>
+        {% endfor %}
+    </div>  {% endcomment %}
+</div>
+
+{% endblock content %}

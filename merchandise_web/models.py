@@ -7,7 +7,7 @@ from django.dispatch import receiver
 # Create your models here.
 class Categorie(models.Model):
     name = models.CharField(max_length=200, help_text='Enter a category (e.g. T-Shirt, Hoodie, etc.)')
-    
+    image = models.ImageField(upload_to='images/', null=True, blank=True)
     def __str__(self):
         return self.name
     
@@ -15,7 +15,7 @@ class Product(models.Model):
     name = models.CharField(max_length=200)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     category = models.ForeignKey('Categorie', on_delete=models.SET_NULL, null=True)
-    description = models.TextField(max_length=1000, help_text='Enter description of the product')
+    description = models.TextField(max_length=1000, help_text='Enter description of the product', null=True, blank=True)
     image = models.ImageField(upload_to='images/', null=True, blank=True)
     
     def __str__(self):

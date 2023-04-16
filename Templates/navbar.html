@@ -4,6 +4,7 @@
 <nav> 
     <ul>
         <li><a href="{% url 'homepage' %}">Home</a></li>
+        <li><a href="{% url 'product_category' %}">Kategori</a></li>
         {% if request.user.is_anonymous%}
         <li><a href="{% url 'register' %}">Daftar</a></li>
         <li><a href="{% url 'login' %}">Masuk</a></li>

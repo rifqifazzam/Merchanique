@@ -7,9 +7,20 @@
 {% include 'navbar.html' %}
 
 <div class="container" href="">
-  <h1>This is Homepage</h1>
   {% comment %} Show user.email {% endcomment %}
-  <h2>Products</h2>
+
+  <h1>Kategori Pilihan</h1>
+  <div class="categories">
+        {% for c in categorie %}
+        <div class="categorie">
+            <img src="{{c.image.url}}" alt="" class="categorie_img">
+            <a href="" class="categorie_name" > {{c.name}}</a>
+        </div>
+        {% endfor %}
+  </div> 
+
+
+  {% comment %} <h1>Products</h1>
   <div class="products">
     {% for p in product %}
     <div class="product">
@@ -20,7 +31,7 @@
       <p class="price">Rp{{ p.price }}</p>
       <a href="product_detail">detail</a>
     </div>
-    {% endfor %}
+    {% endfor %} {% endcomment %}
 
 </div>
 {% endblock content%}

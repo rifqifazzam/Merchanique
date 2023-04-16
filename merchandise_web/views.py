@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
-from .models import Product
+from .models import Product, Categorie
 
 # Create your views here.
 
@@ -23,8 +23,10 @@ def register(request):
 
 def index(request):
     products = Product.objects.all()
+    categories = Categorie.objects.all()
     context = {
         'product': products,
+        "categorie": categories,
     }
     return render(request, 'homepage.html', context)
 
@@ -55,4 +57,13 @@ def profil(request):
 
 
 def product_detail(request):
+    
     return render(request, 'product_detail.html')
+
+def product_category(request):
+    # make this a page of item per category
+    categorie = Categorie.objects.get(id=1)
+    context = {
+        'categorie': categorie,
+    }
+    return render(request, 'product_category.html', context)
