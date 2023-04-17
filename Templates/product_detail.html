@@ -6,7 +6,13 @@
 
 <div class="container">
     <h1>This is Product Detail page</h1>
-
+    <div class="product">
+        product image: <img src="{{product.image.url}}" alt="product image" width="200" height="200"> <br>
+        product name: {{product.name}} <br>
+        product price: {{product.price}} <br>
+        product description: {{product.description}} <br>  
+        product category: {{product.category}} <br>
+    </div>
 </div>
 
 {% endblock content %}

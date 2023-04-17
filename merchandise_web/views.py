@@ -56,9 +56,12 @@ def profil(request):
     return render(request, 'profil.html')
 
 
-def product_detail(request):
-    
-    return render(request, 'product_detail.html')
+def product_detail(request, product_id):
+    product = Product.objects.get(id=product_id)
+    context = {
+        'product': product,
+    }
+    return render(request, 'product_detail.html', context)
 
 def product_category(request, category_id):
     # make this a page of item per category

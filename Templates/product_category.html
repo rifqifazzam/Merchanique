@@ -18,7 +18,7 @@
             </div>
             <p class="name">{{ p.name }}</p>
             <p class="price">Rp{{ p.price }}</p>
-            <a href="product_detail">detail</a>
+            <a href="{% url 'product_detail' p.pk %}" >detail</a>
         </div>
         {% endfor %}
     </div>
