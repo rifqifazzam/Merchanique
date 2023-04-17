@@ -4,15 +4,15 @@
 }
 
 h1 {
-  margin-left: 3.5%;
+  margin-left: 2.5%;
   font-family: "Inter";
   font-style: normal;
   font-weight: 800;
   font-size: 30px;
   line-height: 18px;
-
   color: #3d3d3e;
 }
+
 
 .products {
   display: grid;

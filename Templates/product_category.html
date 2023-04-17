@@ -7,17 +7,18 @@
 {% include 'navbar.html' %}
 
 <div class="container">
-    
-    <h1>This is Product Per Category page</h1>
+    <div class="header">
+        <h1>{{ category.name }}</h1>
+    </div>
     <div class="products">
         {% for p in product %}
         <div class="product">
             <div class="image-container">
                 <img src="{{ p.image.url }}" alt="" class="product_img">
-              </div>
-              <p class="name">{{ p.name }}</p>
-              <p class="price">Rp{{ p.price }}</p>
-              <a href="product_detail">detail</a>
+            </div>
+            <p class="name">{{ p.name }}</p>
+            <p class="price">Rp{{ p.price }}</p>
+            <a href="product_detail">detail</a>
         </div>
         {% endfor %}
     </div>
