@@ -7,7 +7,14 @@
 <div class="container">
     <h1>
         This is the profile page
+        
     </h1>
+    <p>{{user.username}}</p>
+    <p>{{user.email}}</p>
+    {% comment %} add user nama lengkap from profiles model {% endcomment %}
+    <p>{{user.profile.full_name}}</p>
+    <p>{{user.profile.phone}}</p>
+    <p>{{user.profile.address}}</p>
 </div>
 
 {% endblock content %}
