@@ -38,6 +38,7 @@ def index(request):
     return render(request, 'homepage.html', context)
 
 def loginview(request):
+    form = UserCreationForm(request.POST)
     if request.user.is_authenticated:
         return redirect('homepage')
     
@@ -49,6 +50,9 @@ def loginview(request):
             login(request, user)
             return redirect('homepage')
         else:
+            print(form.errors)
+            for msg in form.error_messages:
+                print(form.error_messages[msg])
             return render(request, 'login.html', {'error': 'Invalid username or password'})
     
     elif request.method == 'GET':
