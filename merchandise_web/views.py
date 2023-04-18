@@ -71,25 +71,25 @@ def profile(request):
         }
         return render(request, 'profil.html', context)
     elif request.method == 'POST':
-        p_form = ProfileUpdateForm(request.POST,request.FILES,instance=request.user.profile)
-        if  p_form.is_valid():
-            p_form.save()
-            # messages.success(request, f'Your account has been updated!')
-            return redirect('profil')
+        # p_form = ProfileUpdateForm(request.POST,request.FILES,instance=request.user.profile)
+        # if  p_form.is_valid():
+        #     p_form.save()
+        #     # messages.success(request, f'Your account has been updated!')
+        #     return redirect('profil')
 
 
-        # # saving the full_name, nomor_tlp, and alamat
-        # profile = Profile.objects.get(user=request.user)
-        # profile.full_name = request.POST['full_name']
-        # profile.phone = request.POST['phone']
-        # profile.address = request.POST['address']
-        # # saving the image
-        # profile.image = request.FILES['image']        
-        # profile.save()
+        # saving the full_name, nomor_tlp, and alamat
+        profile = Profile.objects.get(user=request.user)
+        profile.full_name = request.POST['full_name']
+        profile.phone = request.POST['phone']
+        profile.address = request.POST['address']
+        # saving the image
+        profile.image = request.FILES['image']        
+        profile.save()
 
         context = {
-            'p_form': p_form,
-            # 'profile': profile,
+            # 'p_form': p_form,
+            'profile': profile,
 
         }
         return render(request, 'profil.html', context)
