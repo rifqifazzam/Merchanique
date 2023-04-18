@@ -7,6 +7,7 @@ from .models import Product, Categorie, Profile
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from .forms import ProfileUpdateForm
+from django.contrib import messages
 
 # Create your views here.
 
@@ -21,10 +22,9 @@ def register(request):
             login(request, user)
             return redirect('homepage')
         else:
-            print(form.errors)
-            for msg in form.error_messages:
-                print(form.error_messages[msg])
-            return render(request, 'register.html', {'form': form})
+            # render why error 
+            errors = form.errors
+            return render(request, 'register.html', {'form': form, 'errors': errors})
     elif request.method == 'GET':
         return render(request, 'register.html')
 
@@ -47,13 +47,12 @@ def loginview(request):
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
         if user is not None:
+            messages.success(request, f'Your account has been created! You are now able to log in')
             login(request, user)
             return redirect('homepage')
         else:
-            print(form.errors)
-            for msg in form.error_messages:
-                print(form.error_messages[msg])
-            return render(request, 'login.html', {'error': 'Invalid username or password'})
+            messages.info(request, f'Username OR password is incorrect')
+            return render(request, 'login.html')
     
     elif request.method == 'GET':
         return render(request, 'login.html', )
@@ -90,7 +89,6 @@ def profile(request):
         context = {
             # 'p_form': p_form,
             'profile': profile,
-
         }
         return render(request, 'profil.html', context)
 

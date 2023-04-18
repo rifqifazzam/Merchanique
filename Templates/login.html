@@ -9,4 +9,10 @@
         <input type="password" name="password" placeholder="password">
         <input type="submit" value="login">
     </form>
+    <div>
+        {% if messages %} {% for message in messages %}
+        <div class="{{ message.tag }}">{{ message }}</div>
+        {% endfor%} {% endif %} 
+    </div>  
+    
 {% endblock content %}

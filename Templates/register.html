@@ -13,5 +13,11 @@
         <input type="password" name="password2" placeholder="confirm password">
         <input type="submit" value="Daftar">
     </form>
+    <div class="col-md-8">
+        {% if errors %} {% for field, error in errors.items %}
+        {% comment %} <div class="alert alert-danger">{{ field }}: {{ error|join:", " }}</div> {% endcomment %}
+        <div class="alert alert-danger">{{ error|join:", " }}</div>
+        {% endfor%} {% endif %} 
+    </div>
 </div>
 {% endblock content%}
