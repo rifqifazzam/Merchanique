@@ -1,0 +1,112 @@
+.login-title {
+    position: absolute;
+    width: 239px;
+    height: 36px;
+    left: 72.4%;
+    top: 16.527%;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 36px;
+    color: #000000;
+}
+
+.login-register{
+position: absolute;
+width: 400px;
+height: 24px;
+left: 66.9%;
+top: 22.6111%;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 24px;
+
+color: #000000;
+}
+
+input[type="text"] {
+position: absolute;
+width: 335px;
+height: 48px;
+left: 65%;
+top: 283px;
+
+background: #EBE4F5;
+border-radius: 10px;
+border: 0;
+  }
+
+input::placeholder {
+    position: absolute;
+    width: 136px;
+    height: 30px;
+    left: 7px;
+    top: 10px;
+    
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 18px;
+}
+
+input[type="password"] {
+    position: absolute;
+    width: 335px;
+    height: 48px;
+    left: 65%;
+    top: 360px;
+    
+    background: #EBE4F5;
+    border-radius: 10px;
+    border: 0;
+      }
+
+input[type="submit"]{
+position: absolute;
+width: 335px;
+height: 60px;
+left: 65%;
+top: 460px;
+
+background: #54007B;
+border-radius: 10px;
+border: 0;
+}
+
+
+input[type="submit"][value="Login"] {
+    position: absolute;
+/* width: 82px;
+height: 30px; */
+/* left: 877px;
+top: 504px; */
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 700;
+font-size: 25px;
+line-height: 30px;
+
+color: #D9D9D9;
+  }
+
+.rectangle {
+position: absolute;
+width: 444px;
+height: 487px;
+left: 945px;
+top: 117px;
+
+background: #FFFCFF;
+border-radius: 10px;
+border: 3px solid #E0DDDD;
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  }
+
+
+

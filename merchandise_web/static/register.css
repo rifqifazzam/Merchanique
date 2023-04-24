@@ -1,0 +1,135 @@
+.rectangle {
+    position: absolute;
+    width: 444px;
+    height: 523px;
+    left: 945px;
+    top: 117px;
+    
+    background: #FFFCFF;
+    border-radius: 10px;
+    border: 3px solid #E0DDDD;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  
+}
+
+h1{
+position: absolute;
+width: 300px;
+height: 36px;
+left: 36%;
+top: 20PX;
+
+font-style: normal;
+font-weight: 700;
+font-size: 30px;
+line-height: 36px;
+
+color: #000000;
+}
+
+p{
+position: absolute;
+width: 400px;
+height: 24px;
+left: 101px;
+top: 61px;
+
+
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 24px;
+
+color: #000000;
+}
+
+input[type="text"]{
+    position: absolute;
+    width: 335px;
+    height: 48px;
+    left: 55px;
+    top: 120px;
+    
+    background: #EBE4F5;
+    border-radius: 10px;
+    border: 0;
+}
+
+input[type="email"]{
+    position: absolute;
+    width: 335px;
+    height: 48px;
+    left: 55px;
+    top: 197px;
+    
+    background: #EBE4F5;
+    border-radius: 10px;
+    border: 0;
+}
+
+.password1{
+    position: absolute;
+    width: 335px;
+    height: 48px;
+    left: 55px;
+    top: 274px;
+    
+    background: #EBE4F5;
+    border-radius: 10px;
+    border: 0;
+}
+
+.password2{
+    position: absolute;
+    width: 335px;
+    height: 48px;
+    left: 55px;
+    top: 351px;
+    
+    background: #EBE4F5;
+    border-radius: 10px;
+    border: 0;
+}
+
+input[type="submit"]{
+    position: absolute;
+    width: 335px;
+    height: 60px;
+    left: 55px;
+    top: 428px;
+    
+    background: #54007B;
+    border-radius: 10px;
+    border: 0;
+    }
+    
+    
+    input[type="submit"][value="Daftar"] {
+        position: absolute;
+    /* width: 82px;
+    height: 30px; */
+    /* left: 877px;
+    top: 504px; */
+    
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 25px;
+    line-height: 30px;
+    
+    color: #D9D9D9;
+}
+
+input::placeholder {
+    position: absolute;
+    width: 200px;
+    height: 30px;
+    left: 7px;
+    top: 15px;
+    
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 18px;
+}
