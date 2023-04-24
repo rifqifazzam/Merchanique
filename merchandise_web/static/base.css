@@ -1,9 +1,10 @@
 *{
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
 }
 body{
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Inter', sans-serif;
     background-color: #FFFFFF;
 }
 

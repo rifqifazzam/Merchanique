@@ -1,16 +1,20 @@
 {% extends 'base.html' %}
 {% block title%}Register Page{%endblock title%}
 {% block content%}
+{% load static %}
+<link rel="stylesheet" href="{% static '/register.css' %}">
 <div class="container">
-    <h1>Daftar Sekarang</h1>
-    <p>Sudah punya akun? <a href="{% url 'login'%}">Masuk</a></p>
+    <div class="rectangle">
+    <h1>Sign Up</h1>
+    <p>Have an account? <a href="{% url 'login'%}">Sign in</a></p>
+
 
     <form action="" method="post">
         {% csrf_token %}
-        <input type="text" name="username" placeholder="username">
-        <input type="email" name="email" placeholder="email">
-        <input type="password" name="password1" placeholder="password">
-        <input type="password" name="password2" placeholder="confirm password">
+        <input type="text" name="username" placeholder="Username">
+        <input type="email" name="email" placeholder="Email">
+        <input type="password" class="password1" name="password1" placeholder="Password">
+        <input type="password" class="password2" name="password2" placeholder="Confirm password">
         <input type="submit" value="Daftar">
     </form>
     <div class="col-md-8">
