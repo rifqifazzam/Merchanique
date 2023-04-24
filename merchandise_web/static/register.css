@@ -1,135 +1,88 @@
-.rectangle {
-    position: absolute;
-    width: 444px;
-    height: 523px;
-    left: 945px;
-    top: 117px;
-    
-    background: #FFFCFF;
-    border-radius: 10px;
-    border: 3px solid #E0DDDD;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  
+.container{
+  background-image: url("/static/img/bg-login.svg");
+  background-repeat: no-repeat;
+  background-position: 10% center;
+  background-size: contain;
 }
 
-h1{
-position: absolute;
-width: 300px;
-height: 36px;
-left: 36%;
-top: 20PX;
-
-font-style: normal;
-font-weight: 700;
-font-size: 30px;
-line-height: 36px;
-
-color: #000000;
+.box {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin-left: 50%;
 }
 
-p{
-position: absolute;
-width: 400px;
-height: 24px;
-left: 101px;
-top: 61px;
-
-
-font-style: normal;
-font-weight: 400;
-font-size: 20px;
-line-height: 24px;
-
-color: #000000;
+.form{
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  height: 100%;
+  margin: 10% 20% 10% 20%;
+  padding: 7%;
+  justify-content: center;
+  background: #fffcff;
+  border-radius: 12px;
+  border: 1px solid #e0dddd;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
-input[type="text"]{
-    position: absolute;
-    width: 335px;
-    height: 48px;
-    left: 55px;
-    top: 120px;
-    
-    background: #EBE4F5;
-    border-radius: 10px;
-    border: 0;
+.form > * {
+  display: flex;
+  flex-direction: column;
 }
 
-input[type="email"]{
-    position: absolute;
-    width: 335px;
-    height: 48px;
-    left: 55px;
-    top: 197px;
-    
-    background: #EBE4F5;
-    border-radius: 10px;
-    border: 0;
+.form  > p{
+  flex-direction:row ;
+  align-items: center;
+  margin-top: 0;
+  margin:0 auto ;
+  margin-bottom: 30px;
+
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  color: #000000;
 }
 
-.password1{
-    position: absolute;
-    width: 335px;
-    height: 48px;
-    left: 55px;
-    top: 274px;
-    
-    background: #EBE4F5;
-    border-radius: 10px;
-    border: 0;
+.form  > p > a{
+  margin-left: 3px;
 }
 
-.password2{
-    position: absolute;
-    width: 335px;
-    height: 48px;
-    left: 55px;
-    top: 351px;
-    
-    background: #EBE4F5;
-    border-radius: 10px;
-    border: 0;
+
+h1 {
+  font-style: normal;
+  align-items: center;
+  margin-top: 0;
+  margin-bottom: 5px;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 36px;
+  color: #000000;
 }
 
-input[type="submit"]{
-    position: absolute;
-    width: 335px;
-    height: 60px;
-    left: 55px;
-    top: 428px;
-    
-    background: #54007B;
-    border-radius: 10px;
-    border: 0;
-    }
-    
-    
-    input[type="submit"][value="Daftar"] {
-        position: absolute;
-    /* width: 82px;
-    height: 30px; */
-    /* left: 877px;
-    top: 504px; */
-    
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 25px;
-    line-height: 30px;
-    
-    color: #D9D9D9;
+input {
+  background: #ebe4f5;
+  border-radius: 10px;
+  border: 0;
+  margin-bottom: 25px;
+  height: 48px;
+  padding: 0 15px;
+}
+
+input[type="submit"] {
+  background: #54007b;
+  border-radius: 10px;
+  border: 0;
+  margin-bottom: 0;
+  color:#D9D9D9 ;
+  font-size: 18px;
 }
 
 input::placeholder {
-    position: absolute;
-    width: 200px;
-    height: 30px;
-    left: 7px;
-    top: 15px;
-    
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 15px;
-    line-height: 18px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 18px;
 }

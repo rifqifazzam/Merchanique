@@ -4,24 +4,26 @@
 {% load static %}
 <link rel="stylesheet" href="{% static '/register.css' %}">
 <div class="container">
-    <div class="rectangle">
-    <h1>Sign Up</h1>
-    <p>Have an account? <a href="{% url 'login'%}">Sign in</a></p>
+        <div class="box">
+            <div class="form">
+                <h1>Daftar Sekarang</h1>
+                <p class="reminder">Sudah punya akun? <a href="{% url 'login'%}">Masuk</a></p>
 
-
-    <form action="" method="post">
-        {% csrf_token %}
-        <input type="text" name="username" placeholder="Username">
-        <input type="email" name="email" placeholder="Email">
-        <input type="password" class="password1" name="password1" placeholder="Password">
-        <input type="password" class="password2" name="password2" placeholder="Confirm password">
-        <input type="submit" value="Daftar">
-    </form>
-    <div class="col-md-8">
-        {% if errors %} {% for field, error in errors.items %}
-        {% comment %} <div class="alert alert-danger">{{ field }}: {{ error|join:", " }}</div> {% endcomment %}
-        <div class="alert alert-danger">{{ error|join:", " }}</div>
-        {% endfor%} {% endif %} 
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <input type="text" name="username" placeholder="Username">
+                    <input type="email" name="email" placeholder="Email">
+                    <input type="password" class="password1" name="password1" placeholder="Kata Sandi">
+                    <input type="password" class="password2" name="password2" placeholder="Konfirmasi Kata Sandi">
+                    <input type="submit" value="Daftar">
+                </form>
+                <div class="col-md-8">
+                    {% if errors %} {% for field, error in errors.items %}
+                    {% comment %} <div class="alert alert-danger">{{ field }}: {{ error|join:", " }}</div> {% endcomment %}
+                    <div class="alert alert-danger">{{ error|join:", " }}</div>
+                    {% endfor%} {% endif %} 
+                </div>
+            </div>    
     </div>
 </div>
 {% endblock content%}

@@ -3,28 +3,25 @@
 {% block content %}
 {% load static %}
 <link rel="stylesheet" href="{% static '/login.css' %}">
-<div class="rectangle"></div>
-<h1 class="login-title">Sign in</h1>
-<p class ="login-register">Haven't an account? <a href="{% url 'register'%}">Register</a></p>
-    <form action="" method="post">
-        {% csrf_token %}
-        <input type="text" name="username" placeholder="username"  id="name-input">
-        <input type="password" name="password" placeholder="password">
-        <input type="submit" value="login">
-    </form>
-    <div>
+<div class="container">
+  <div class="box">
+    <div class="form">
+
+      <h1 class="login-title">Masuk</h1>
+      <p class ="login-register">Belum punya akun? <a href="{% url 'register'%}">Daftar</a></p>
+      <form action="" method="post">
+          {% csrf_token %}
+          <input type="text" name="username" placeholder="Username"  id="name-input">
+          <input type="password" name="password" placeholder="Kata Sandi">
+          <input type="submit" value="Masuk">
+      </form>
+      <div>
         {% if messages %} {% for message in messages %}
         <div class="{{ message.tag }}">{{ message }}</div>
         {% endfor%} {% endif %} 
-    </div>  
-    
-    <script>
-        const inputField = document.getElementById('nama');
-        inputField.addEventListener('focus', function() {
-          inputField.placeholder = '';
-        });
-        inputField.addEventListener('blur', function() {
-          inputField.placeholder = 'Username';
-        });
-      </script>
+      </div>  
+
+    </div>
+  </div>
+</div>
 {% endblock content %}
