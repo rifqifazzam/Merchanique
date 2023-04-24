@@ -13,6 +13,8 @@
         product description: {{product.description}} <br>  
         product category: {{product.category}} <br>
     </div>
+    {% comment %} Make the button when clicked redirect to cart {% endcomment %}
+    <button data-product="{{product.id}}" data-action="add" class="btn add-btn update-cart" >Add to Cart</button>
 </div>
 
 {% endblock content %}
