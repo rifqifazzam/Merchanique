@@ -1,0 +1,32 @@
+
+.cart-roww{
+	display: flex;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ececec;
+    height: fit-content;
+}
+
+.cart-row{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+}
+
+.cart-item{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    margin-bottom: 10px;
+}
+
+.box{
+    display: flex;
+}
+
+.box img{
+    display: block;
+    border: 1px solid black;
+    background-color: green;
+    color: #ececec;
+}

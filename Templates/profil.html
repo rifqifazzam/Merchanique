@@ -10,13 +10,14 @@
     </h1>
     <p>{{user.username}}</p>
     <p>{{user.email}}</p>
-    {% comment %} add user nama lengkap from profiles model {% endcomment %}
     <form action="/profil/" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        Nama lengkap <input type="text" name="full_name" value="{{user.profile.full_name}}"><br>
-        No. Telepon <input type="text" name="phone" value="{{user.profile.phone}}"><br>
-        Alamat <input type="text" name="address" value="{{user.profile.address}}"><br>
-        {% comment %} render the profile image {% endcomment %}
+        <label for="full_name">Nama lengkap</label>
+        <input type="text" name="full_name" value="{{user.profile.full_name}}"><br>
+        <label for="phone">No. Telepon</label>
+        <input type="text" name="phone" value="{{user.profile.phone}}"><br>
+        <label for="address">Alamat</label>
+        <input type="text" name="address" value="{{user.profile.address}}"><br>
         <img src="{{user.profile.image.url}}" alt="profile image" width="100px"><br>
         <input type="file" name="image"><br>
         <input type="submit" value="submit">

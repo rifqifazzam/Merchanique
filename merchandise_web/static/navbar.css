@@ -2,10 +2,6 @@
   padding: 0;
   box-sizing: border-box;
 }
-body {
-  font-family: "Roboto", sans-serif;
-  background-color: #ffffff;
-}
 
 nav ul {
   list-style: none;
@@ -20,12 +16,27 @@ nav li {
 }
 
 nav a {
-  color: #000;
-  display: block;
-  text-decoration: none;
+  text-decoration: none; 
+  color: #54007B; 
 }
 
-nav .dropdown-menu {
+nav a:hover {
+  color: #9a49b7; 
+}
+
+#cart-icon{
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+
+/* display the cart total next to the icon */
+#cart-total {
+  display: inline-block; 
+  margin-left: 5px;
+}
+
+/* nav .dropdown-menu {
   display: none;
   position: absolute;
   top: 100%;
@@ -54,4 +65,5 @@ nav .dropdown-menu a {
 
 nav .dropdown-menu a:hover {
   background-color: #e5e5e5;
-}
+} */
+
