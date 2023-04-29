@@ -1,0 +1,38 @@
+{% extends 'base.html'%}
+{% block title %}Payment{% endblock title %}
+{% block content %}
+{% include 'navbar.html' %}
+{% comment %} make an Ok button {% endcomment %}
+<p>Virtual account number: <span>{{ order.virtual_account}}</span></p>
+<p>Payment time: <span id="countdown-timer"></span></p>
+<p>Payment method: <span>{{ order.payment }}</span></p>
+<p>Total payment: <span>Rp {{ order.get_cart_total }}</span></p>
+<p>Total payment: <span>Rp {{ order.get_total_payment }}</span></p>
+<p>Shipping: <span>{{ order.expedition }}</span></p>
+<a href="{% url 'purchase' %}" class="btn btn-primary">Ok</a>
+
+<script>
+    var countDownDate = new Date('{{ order.date_ordered|date:"Y/m/d H:i:s" }}').getTime() + (5*60*1000); // add 1 hour to the order date
+
+    var x = setInterval(function() {
+      var now = new Date().getTime();
+      var distance = countDownDate - now;
+
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById("countdown-timer").innerHTML = hours + "h "
+      + minutes + "m " + seconds + "s ";
+
+      if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("countdown-timer").innerHTML = "EXPIRED";
+        // add code to delete the order here
+      }
+    }, 1000);
+</script>
+
+    
+
+{% endblock content %}
