@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Order Detail - # {{ order.order_id }}</h1>
+<hr>
+{% for item in order.orderitem_set.all %}
+<p>Product: {{ item.product.name }}</p>
+<p>Quantity: {{ item.quantity }}</p>
+<p>Price: {{ item.product.price }}</p>
+<p>Total: {{ item.get_total }}</p>
+<hr>
+{% endfor %}
+
+<h3>Shipment Information</h3>
+<p>Shipping: {{ expedition.price}}</p>
+<p>Address: {{ shipment.address }}, {{shipment.province}}, {{ shipment.city }}</p>
+<p>ZIP: {{ shipment.zipcode }}</p>
+<hr>
+{% comment %} create a form to input a tracking number for the order.tracking number {% endcomment %}
+<form action="{% url 'process_order' order.id %}" method="post">
+    {% csrf_token %}
+    <input type="text" name="tracking_number" placeholder="Tracking Number">
+    <hr>
+    <input type="submit" value="Mark as sent">
+</form>
+
+
+{% endblock content %}

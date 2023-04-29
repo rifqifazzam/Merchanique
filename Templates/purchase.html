@@ -6,10 +6,9 @@
 
 
 {% for  order in orders %}
-    <h2>Order Summary - # {{ order.id }}</h2>
-    <p>Date Ordered: {{ order.date_ordered }}</p>
-    <p>Transaction ID: {{ order.transaction_id }}</p>
-    <p>Complete: {{ order.complete }}</p>
+    <h2>Order Summary - # {{ order.order_id }}</h2>
+    <p>Date: {{ order.date_ordered|date:"F j, Y" }}</p>
+    <p>Time: {{ order.date_ordered|time }}</p>
 
     <div class="cart-row">
         {% for item in order.orderitem_set.all %}
@@ -22,10 +21,29 @@
 
         {% endfor %}
     </div>
+
+    {% if order.payment_status %}
+        <p>Status: Paid</p>
+    {% else %}
+        <p>Status: Unpaid</p>
+    {% endif %}
+
     <p>Courier: {{ order.expedition }}</p>
     <p>Subtotal Rp{{ order.get_cart_total }}</p>
     <p>Shipping Rp 0 </p>
     <p>Total Rp{{ order.get_cart_total }}</p>
+    {% if order.payment_status%}
+        {% for shipment in shipments %}
+            {% if shipment.order == order %}
+                <p>Tracking Number:  {{ shipment.tracking_number }}</p>
+            {% else %}
+                <p>City: - </p>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        {% comment %} make a payment detail button {% endcomment %}
+        <a href="{% url 'payment' order.pk %}">Payment details</a>
+    {% endif %}
 
 {% endfor %}
 {% endblock content %}

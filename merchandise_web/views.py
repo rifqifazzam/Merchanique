@@ -8,9 +8,10 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib import messages
 from django.http import JsonResponse
-import json
-import datetime
 from django.utils import timezone
+import json
+import random
+from django.contrib.auth.decorators import user_passes_test
 
 
 # Create your views here.
@@ -61,7 +62,6 @@ def loginview(request):
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            messages.success(request, f'Your account has been created! You are now able to log in')
             login(request, user)
             return redirect('homepage')
         else:
@@ -78,13 +78,14 @@ def logoutview(request):
 @login_required(login_url='login')
 def profile(request):
     if request.method == 'GET':
-        # Buat cart item di navbar
         if request.user.is_authenticated:
+            # Showing the total cart items in navbar
             user = request.user
             order, created = Order.objects.get_or_create(user=user, complete=False)
             items = order.orderitem_set.all()
             cartItems = order.get_total_items
         else:
+            # Case where user is not logged in
             items = []
             order = {'get_cart_total': 0, 'get_total_items': 0}
             cartItems = order['get_total_items']
@@ -97,25 +98,39 @@ def profile(request):
         return render(request, 'profil.html', context)
     
     elif request.method == 'POST':
-        # Buat cart item di navbar
+        # Showing the total cart items in navbar
         if request.user.is_authenticated:
             user = request.user
             order, created = Order.objects.get_or_create(user=user, complete=False)
             items = order.orderitem_set.all()
-            cartItems = order.get_cart_items
+            cartItems = order.get_total_items
         else:
+            # Case where user is not logged in
             items = []
             order = {'get_cart_total': 0, 'get_total_items': 0}
             cartItems = order['get_total_items']
 
-        # saving the full_name, nomor_tlp, and alamat
+        # Updating the user profile
         profile = Profile.objects.get(user=request.user)
         profile.full_name = request.POST['full_name']
         profile.phone = request.POST['phone']
         profile.address = request.POST['address']
-        # saving the image
-        profile.image = request.FILES['image']        
+ 
+        # Handle the case where no image is uploaded
+        if 'image' in request.FILES:
+            profile.image = request.FILES['image']
+        else:
+            # Use the old image if available
+            if profile.image:
+                profile.image = profile.image
+
         profile.save()
+
+        # Update the username and email
+        user = request.user
+        user.username = request.POST['username']
+        user.email = request.POST['email']
+        user.save()
 
         context = {
             'profile': profile,
@@ -124,7 +139,7 @@ def profile(request):
         return render(request, 'profil.html', context)
 
 def product_detail(request, product_id):
-    # Buat cart item di navbar
+    # Showing the total cart items in navbar
     if request.user.is_authenticated:
         user = request.user
         order, created = Order.objects.get_or_create(user=user, complete=False)
@@ -144,7 +159,7 @@ def product_detail(request, product_id):
     return render(request, 'product_detail.html', context)
 
 def product_category(request, category_id):
-    # Buat cart item di navbar
+    # Showing the total cart items in navbar
     if request.user.is_authenticated:
         user = request.user
         order, created = Order.objects.get_or_create(user=user, complete=False)
@@ -155,7 +170,6 @@ def product_category(request, category_id):
         order = {'get_cart_total': 0, 'get_total_items': 0}
         cartItems = order['get_total_items']
 
-    # make this a page of item per category
     category = Categorie.objects.get(id=category_id)
     products = Product.objects.filter(category=category)
     
@@ -179,7 +193,6 @@ def save_user_profile(sender, instance, **kwargs):
 def add_to_cart(request, product_id):
     return render(request, 'my_cart.html')
     
-# test
 def updateItem(request):
     data = json.loads(request.body)
     productId = data['productId']
@@ -196,10 +209,16 @@ def updateItem(request):
 
     if action == 'add':
         orderItem.quantity = (orderItem.quantity + 1)
+        messages.success(request, f'Item was successfully added')
+        orderItem.save()
+        # Render message item suces fully added
+        return JsonResponse({'success': 'Item was added'}, status=200)
+
     elif action == 'remove':
         orderItem.quantity = (orderItem.quantity - 1)
+        orderItem.save()
 
-    orderItem.save()
+    
     if orderItem.quantity <= 0:
         orderItem.delete()
 
@@ -224,16 +243,16 @@ def checkout(request):
         items = order.orderitem_set.all()
         cartItems = order.get_total_items 
         payments = Payment.objects.all()
-        context = { 'expeditions': expeditions ,  'items' : items, 'order': order, 'payments' : payments}
+        context = { 'expeditions': expeditions ,  'items' : items, 'order': order, 'payments' : payments,  'cartItems': cartItems,}
         return render(request, 'checkout.html', context)
+    
     elif request.method == 'POST':
-       
         user = request.user
         city = request.POST['city']
         province = request.POST['province']
         zipcode = request.POST['zipcode']
         address = request.POST['address']
-      
+        
         order, created = Order.objects.get_or_create(user=user, complete=False)
         Shipment.objects.create(
             user=user,
@@ -246,8 +265,19 @@ def checkout(request):
 
         payment_id = request.POST['payment']
         payment = Payment.objects.get(id=payment_id)
-        # only update the order order_time
-        order.order_time = timezone.now()
+        expedition_id = request.POST.get('expedition')
+        expedition = Expedition.objects.get(id=expedition_id)
+        order.expedition = expedition
+
+        # Generate the virtual account number
+        random_num = str(random.randint(100, 999))
+        bank_code = payment.bank_code  # Get the bank code from the payment object
+        virtual_account = bank_code + str(order.order_id) + random_num
+
+        # Save the virtual account number in the order object
+        order.virtual_account = virtual_account
+
+        order.date_ordered = timezone.now()
         order.payment = payment
         order.complete = True
         order.save()
@@ -256,21 +286,56 @@ def checkout(request):
 @login_required(login_url='login')
 def purchase(request):
     user = request.user
-    orders = Order.objects.filter(user=user)
-    # Query so it show the order item of the order
+    
+    orders = Order.objects.filter(user=user, orderitem__quantity__gt=0).distinct()
     order_items = []
     for order in orders:
         order_items.append(order.orderitem_set.all())
 
-  
-    context = { 'orders': orders, 'order_items': order_items}  
+    shipments = Shipment.objects.filter(user=user, order__payment_status=True)   
+    context = { 'orders': orders, 'order_items': order_items, 'shipments': shipments,}  
     return render(request, 'purchase.html', context)
 
-# Jadi di checkout itu input shipment ama payment method ,trus create virutal ac  num
-# @login_required(login_url='login')
-# def processOrder(request):
-#     data = json.loads(request.body)
 
+@login_required(login_url='login')
+def payment(request, pk):
+    # get hthe order by the user request
+    user = request.user
+    order = Order.objects.get(id=pk)
+    context = {'order': order}
 
     
-#     return JsonResponse('Payment submitted..', safe=False)
+    return render(request, 'payment.html', context)
+ 
+
+#  Admin views
+@user_passes_test(lambda u: u.is_superuser)
+def manage_orders(request):
+    orders = Order.objects.all()
+    context = {'orders': orders}
+    return render(request, 'manage_orders.html', context)
+
+@user_passes_test(lambda u: u.is_superuser)
+def order_detail(request, pk):
+    order = Order.objects.get(id=pk)
+    shipment = Shipment.objects.get(order=order)
+    # get the expedition object
+    expedition = Expedition.objects.get(id=order.expedition.id)
+    context = {'order': order, 'shipment': shipment, 'expedition': expedition}
+    return render(request, 'order_detail.html', context)
+
+# Make a process order
+@user_passes_test(lambda u: u.is_superuser)
+def process_order(request, pk):
+    order = Order.objects.get(id=pk)
+    shipment = Shipment.objects.get(order=order)
+    if request.method == 'POST':
+        order.payment_status = True
+        tracking_number = request.POST['tracking_number']
+        shipment.tracking_number = tracking_number
+        
+        
+        order.save()
+        shipment.save()
+        return redirect('manage_orders')
+    
