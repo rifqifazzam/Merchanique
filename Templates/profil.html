@@ -8,16 +8,18 @@
     <h1>
         This is the profile page
     </h1>
-    <p>{{user.username}}</p>
-    <p>{{user.email}}</p>
     <form action="/profil/" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <label for="full_name">Nama lengkap</label>
-        <input type="text" name="full_name" value="{{user.profile.full_name}}"><br>
+        <label for="username">Username</label>
+        <input type="text" name="username" value="{{user.username}}"><br>
+        <label for="email">Email</label>
+        <input type="text" name="email" value="{{user.email}}"><br>
         <label for="phone">No. Telepon</label>
         <input type="text" name="phone" value="{{user.profile.phone}}"><br>
         <label for="address">Alamat</label>
         <input type="text" name="address" value="{{user.profile.address}}"><br>
+        <label for="full_name">Nama lengkap</label>
+        <input type="text" name="full_name" value="{{user.profile.full_name}}"><br>
         <img src="{{user.profile.image.url}}" alt="profile image" width="100px"><br>
         <input type="file" name="image"><br>
         <input type="submit" value="submit">
