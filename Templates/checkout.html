@@ -13,7 +13,6 @@
         <div id="shipping-info">
             <label for="full_name">Nama lengkap</label>
             <input type="text" name="full_name" value="{{user.profile.full_name}}"><br>
-            {% comment %} add user.email {% endcomment %}
             <label for="email">Email</label>
             <input type="text" name="email" value="{{user.email}}"><br>
             <label for="phone">No. Telepon</label>
@@ -24,45 +23,34 @@
 
         <div id="shipping-address">
             <label for="city">City</label>
-            <input type="text" name="city" value=""><br>
+            <input type="text" name="city" value="" required><br>
             <label for="province">Province</label>
-            <input type="text" name="province" value=""><br>
+            <input type="text" name="province" value="" required><br>
             <label for="address">Zip Code</label>
-            <input type="text" name="zipcode" value=""><br>
+            <input type="text" name="zipcode" value="" required><br>
         </div>
 
         <div id="shipping-method">
             <p>Please select a shipping method</p>
             {% for exp in expeditions%}
-            <input type="radio" name="expedition" value="{{exp.id}}">
-            <label for="expedition">{{exp.name}}</label>
+                <input type="radio" name="expedition" value="{{exp.id}}">
+                <label for="expedition">{{exp.name}}</label>
             {% endfor %}
         </div>
 
         <div class="order-summary">
-            {% comment %} render then transaction id {% endcomment %}
-            
             <p>Order Summary - #{{ order.transaction_id }} </p>
-            {% comment %} Render date, time of order that  {% endcomment %}
             <p> product  - quantity</p>
-            {% comment %} Render the product amd the quantity {% endcomment %}
             {% for item in items%}
             <p>{{item.product.name}} : {{item.quantity}}</p>
             {% endfor %}
-            {% comment %} Render the sub total {% endcomment %}
             <p>Total : {{order.get_cart_total}}</p>
-            {% comment %} Render the shipping cost {% endcomment %}
             <p>Shipping Cost : 0</p>
-            {% comment %} Select payment {% endcomment %}
             <p>Payment Method</p>
-            {% comment %} <select name="payment_method">
-                <option value="1">Bank Transfer</option> {% endcomment %}
-                {% comment %} render the payment method using select option {% endcomment %}
-                <select name="payment">
-                {% for payment in payments %}
-                    <option value="{{payment.id}}">{{payment.name}}</option>
-                {% endfor %}
-            <P>
+            <select name="payment">
+            {% for payment in payments %}
+                <option value="{{payment.id}}">{{payment.name}}</option>
+            {% endfor %}
         </div>
 
         <hr>
@@ -70,8 +58,4 @@
     </form>
 </div>
 
-<script>
-
-
-</script>
 {% endblock content %}
