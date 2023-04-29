@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+<a  class="btn btn-outline-dark" href="{% url 'manage_orders' %}">&#x2190; Manage Orders</a>
 <h1>Order Detail - # {{ order.order_id }}</h1>
 <hr>
 {% for item in order.orderitem_set.all %}
@@ -18,9 +19,14 @@
 {% comment %} create a form to input a tracking number for the order.tracking number {% endcomment %}
 <form action="{% url 'process_order' order.id %}" method="post">
     {% csrf_token %}
-    <input type="text" name="tracking_number" placeholder="Tracking Number">
+    <input type="text" name="tracking_number" placeholder="Tracking Number" value="{{ shipment.tracking_number }}">
     <hr>
+    {% comment %} if order.payment_status true just hide the mark as sent {% endcomment %}
+    {% if order.payment_status %}
+    <input type="submit" value="Mark as sent" disabled>
+    {% else %}
     <input type="submit" value="Mark as sent">
+    {% endif %}
 </form>
 
 

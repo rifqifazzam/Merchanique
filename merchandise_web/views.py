@@ -312,7 +312,10 @@ def payment(request, pk):
 @user_passes_test(lambda u: u.is_superuser)
 def manage_orders(request):
     orders = Order.objects.all()
-    context = {'orders': orders}
+    total_sent = Order.objects.filter(payment_status=True).count()
+    # the unpaid orders
+    total_unpaid = Order.objects.filter(payment_status=False).count()
+    context = {'orders': orders, 'total_sent': total_sent, 'total_unpaid': total_unpaid}
     return render(request, 'manage_orders.html', context)
 
 @user_passes_test(lambda u: u.is_superuser)

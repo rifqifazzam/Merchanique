@@ -1,5 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
+<h1>Live Order</h1>
+<hr>
+{% comment %} the total pending / unpaid order {% endcomment %}
+<p>Pending: {{total_unpaid }}</p>
+<p>Sent: {{ total_sent }}</p>
+{% comment %} <p>Sent: {{ orders.get_total_sent }}</p> {% endcomment %}
+
 <h1>Manage Orders</h1>
 <table>
   <thead>
