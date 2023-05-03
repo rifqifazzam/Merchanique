@@ -15,7 +15,8 @@
 
       </div>  
     <div class="product">
-        product image: <img src="{{product.image.url}}" alt="product image" width="200" height="200"> <br>
+        {% comment %} product image: <img src="{{product.image.url}}" alt="product image" width="200" height="200"> <br> {% endcomment %}
+        <img id="mainImage" src="{{ product_images.first.image.url }}" alt="{{ product_images.first.description }}">
         product name: {{product.name}} <br>
         product price: {{product.price}} <br>
         product description: {{product.description}} <br>  
@@ -23,6 +24,26 @@
     </div>
     <button data-product="{{product.id}}" data-action="add" class="btn add-btn update-cart" >Add to Cart</button>
 </div>
+
+<div class="row">
+  {% for image in product_images %}
+    <div class="col-md-4">
+      <img src="{{ image.image.url }}" alt="{{ image.description }}" class="thumbnail" onclick="updateMainImage('{{ image.image.url }}')">
+      <p>{{ image.description }}</p>
+    </div>
+  {% endfor %}
+</div>
+
+<img id="mainImage" src="{{ product_images.first.image.url }}" alt="{{ product_images.first.description }}">
+
+<script>
+  // Get the main product image
+  const mainImage = document.getElementById('mainImage');
+  // Function to update the main product image
+  function updateMainImage(url) {
+    mainImage.src = url;
+  }
+</script>
 
 <script>
     setTimeout(function(){

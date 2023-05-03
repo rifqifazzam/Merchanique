@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .models import Product, Categorie, Profile, Order, OrderItem, Expedition, Shipment, Payment
+from .models import Product, Categorie, Profile, Order, OrderItem, Expedition, Shipment, Payment, ProductImg
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib import messages
@@ -152,9 +152,11 @@ def product_detail(request, product_id):
 
     # Kode untuk menampilkan detail product
     product = Product.objects.get(id=product_id)
+    product_images = ProductImg.objects.filter(product=product)
     context = {
         'product': product,
         'cartItems': cartItems,
+        'product_images': product_images,
     }
     return render(request, 'product_detail.html', context)
 
@@ -218,7 +220,7 @@ def updateItem(request):
         orderItem.quantity = (orderItem.quantity - 1)
         orderItem.save()
 
-    
+
     if orderItem.quantity <= 0:
         orderItem.delete()
 
