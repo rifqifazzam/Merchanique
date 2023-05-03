@@ -17,6 +17,7 @@ class Product(models.Model):
     category = models.ForeignKey('Categorie', on_delete=models.SET_NULL, null=True)
     description = models.TextField(max_length=1000, help_text='Enter description of the product', null=True, blank=True)
     image = models.ImageField(upload_to='images/product/', null=True, blank=True)
+    designable = models.BooleanField(default=False, null=True, blank=False)
     
     def __str__(self):
         return self.name
@@ -55,6 +56,14 @@ class Payment(models.Model):
     image = models.ImageField(upload_to='images/payment/', null=True, blank=True)
     bank_code = models.CharField(max_length=4, null=True, blank=True)
 
+    def __str__(self):
+        return self.name
+    
+class UserDesign(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
+    text = models.CharField(max_length=200, null=True, blank=True)
+    image = models.ImageField(upload_to='images/user_design/', null=True, blank=True)
+    price = models.IntegerField(default=0, null=True, blank=True)
     def __str__(self):
         return self.name
 
@@ -98,13 +107,16 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True)
     quantity = models.IntegerField(default=0, null=True, blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
-
+    user_design = models.ForeignKey(UserDesign, on_delete=models.SET_NULL, blank=True, null=True)
+    
     def __str__(self): 
         return str(self.id)
     
     @property
     def get_total(self):
         total = self.product.price * self.quantity
+        if self.user_design:
+            total += self.user_design.price
         return total
     
 class Shipment(models.Model):
