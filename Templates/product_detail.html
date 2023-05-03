@@ -5,7 +5,7 @@
 {% include 'navbar.html' %}
 
 <div class="container">
-    <h1>This is Product Detail page</h1>
+    <h1>{{product.name}} </h1>
     <div>
         {% if messages %}
             {% for message in messages %}
@@ -25,7 +25,6 @@
             </div>
           {% endfor %}
         </div></br>
-        product name: {{product.name}} <br>
         product price: {{product.price}} <br>
         product description: {{product.description}} <br>  
         product category: {{product.category}} <br>
