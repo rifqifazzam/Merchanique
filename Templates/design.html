@@ -1,0 +1,28 @@
+{% extends 'base.html'%}
+{% block title %}Design{% endblock title %}
+{% block content %}
+{% include 'navbar.html' %}
+{% if orderitem.user_design %}
+    <h2>Design Image</h2>
+    <img src="{{ orderitem.user_design.image.url }}" alt="Design Image" width="50" height="50">
+    <form method="POST" action="{% url 'delete_design_image' orderitem.user_design.pk %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Delete Image</button>
+    </form>
+    <h2>Design Text</h2>
+    <p>{{  orderitem.user_design.text }}</p>
+    <form method="POST" action="{% url 'delete_design_text' orderitem.user_design.pk %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Delete Text</button>
+    </form>
+{% endif %}
+{% comment %} Add a submit design image / text form and a save /button {% endcomment %}
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="design_image">Upload Design Image</label><br>
+    <input type="file" name="design_image" class="" id="design_image"><br>
+    <label for="design_text">Enter Design Text</label><br>
+    <input type="text" name="design_text" class="" id="design_text"><br>
+    <button type="submit" class="btn btn-primary">Save Design</button>
+</form>
+{% endblock content %}

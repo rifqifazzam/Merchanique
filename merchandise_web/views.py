@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .models import Product, Categorie, Profile, Order, OrderItem, Expedition, Shipment, Payment, ProductImg
+from .models import Product, Categorie, Profile, Order, OrderItem, Expedition, Shipment, Payment, ProductImg, UserDesign
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib import messages
@@ -12,6 +12,8 @@ from django.utils import timezone
 import json
 import random
 from django.contrib.auth.decorators import user_passes_test
+from django.shortcuts import render, get_object_or_404
+
 
 
 # Create your views here.
@@ -220,7 +222,6 @@ def updateItem(request):
         orderItem.quantity = (orderItem.quantity - 1)
         orderItem.save()
 
-
     if orderItem.quantity <= 0:
         orderItem.delete()
 
@@ -344,3 +345,56 @@ def process_order(request, pk):
         shipment.save()
         return redirect('manage_orders')
     
+@login_required(login_url='login')
+def design(request, pk):
+    orderitem = OrderItem.objects.get(id=pk)
+    if request.method == 'POST':
+        design_image = request.FILES.get('design_image')
+        design_text = request.POST.get('design_text')
+
+        # check if order item already has a user design
+        if orderitem.user_design:
+            # update existing user design
+            user_design = orderitem.user_design
+            user_design.image = design_image or user_design.image # use new image or existing image
+            user_design.text = design_text
+            user_design.save()
+        else:
+            # create a new user design and associate it with the order item
+            user_design = UserDesign.objects.create(
+                user=request.user,
+                image=design_image,
+                text=design_text,
+                price=orderitem.product.price
+            )
+            orderitem.user_design = user_design
+            orderitem.save()
+
+        # redirect to the cart page
+        return redirect(request.path)
+    
+    else:
+        # if not a POST request, display the design page with the order item
+        context = {'orderitem': orderitem} 
+        return render(request, 'design.html', context)
+
+
+def delete_design_image(request, pk):
+    user_design = get_object_or_404(UserDesign, pk=pk, user=request.user)
+    orderitem_id = user_design.orderitem.id 
+    if request.method == 'POST':
+        # delete the image file and the UserDesign instance
+        user_design.image.delete()
+        return redirect('design', pk=orderitem_id) 
+    
+
+
+@login_required(login_url='login')
+def delete_design_text(request, pk):
+    user_design = get_object_or_404(UserDesign, pk=pk, user=request.user)
+    orderitem_id = user_design.orderitem.id 
+    if request.method == 'POST':
+        # delete the UserDesign instance
+        user_design.text = None
+        user_design.save()
+        return redirect('design', pk=orderitem_id) 

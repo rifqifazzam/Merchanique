@@ -24,16 +24,17 @@
         <div class="cart-item">
             <img class="cart-item-image" src="" width="100" height="100">
             <span class="cart-item-title">{{item.product.name}}</span>
+            {% if item.product.designable %}
+            <a href="{% url 'design' item.id %}">Customize design</a>
+            {% endif %}
             <p>Rp{{item.product.price}}</p>
             <div  class="box">
                 <img data-product="{{item.product.id}}" data-action="add" class="chg-quantity update-cart" src="" alt="+" >
                 <p class="quantity">{{item.quantity}}</p>
 				<img data-product="{{item.product.id}}" data-action="remove" class="chg-quantity update-cart" src="" alt="-">
             </div>
-
             <p>Total Rp{{item.get_total}}</p>
         </div>
-
         {% endfor %}
     </div>
 

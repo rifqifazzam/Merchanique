@@ -27,7 +27,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #nambahin merchandise_web app
     'merchandise_web.apps.MerchandiseWebConfig',
-
 ]
 
 MIDDLEWARE = [
