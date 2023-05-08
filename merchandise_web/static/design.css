@@ -1,0 +1,22 @@
+.image-container {
+    position: relative;
+    display: inline-block;
+}
+  
+.design-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width:70px; 
+    height:70px;
+    opacity: 0.5;
+
+}
+
+.design2{
+    top: 30%;
+    left: 35%;
+    width:32px; 
+    height:32px;
+}

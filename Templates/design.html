@@ -2,21 +2,54 @@
 {% block title %}Design{% endblock title %}
 {% block content %}
 {% include 'navbar.html' %}
+{% load static %}
+<link rel="stylesheet" href="{% static '/design.css' %}">
+
+<h1>Design Tools</h1>
+{% comment %} Display the orderitem.image {% endcomment %}
+{% if product_image %}
+  {% if orderitem.user_design.image %}
+    <div class="image-container">
+      <img src="{{ product_image.url }}" alt="Image" width="250" height="250">
+      <img src="{{ orderitem.user_design.image.url }}" alt="Design Image"  class="design-image">
+    </div>
+  {% else %}
+    <img src="{{ product_image.url }}" alt="Image" width="250" height="250">
+  {% endif %}
+{% endif %}
+
+{% if product_image %}
+  {% if orderitem.user_design.image %}
+    <div class="image-container">
+      <img src="{{ product_image.url }}" alt="Image" width="250" height="250">
+      <img src="{{ orderitem.user_design.image.url }}" alt="Design Image"  class="design-image design2">
+    </div>
+  {% else %}
+    <img src="{{ product_image.url }}" alt="Image" width="250" height="250">
+  {% endif %}
+{% endif %}
+
+
 {% if orderitem.user_design %}
-    <h2>Design Image</h2>
-    <img src="{{ orderitem.user_design.image.url }}" alt="Design Image" width="50" height="50">
-    <form method="POST" action="{% url 'delete_design_image' orderitem.user_design.pk %}">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Delete Image</button>
-    </form>
-    <h2>Design Text</h2>
-    <p>{{  orderitem.user_design.text }}</p>
-    <form method="POST" action="{% url 'delete_design_text' orderitem.user_design.pk %}">
+    <h3>Design Image</h3>
+    {% if orderitem.user_design.image %}
+        <form method="POST" action="{% url 'delete_design_image' orderitem.id orderitem.user_design.pk %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Delete Image</button>
+        </form>
+        <img src="{{ orderitem.user_design.image.url }}" alt="Design Image" width="50" height="50">
+    {% endif %}
+
+    <h3>Design Text</h3>
+    {% if orderitem.user_design.text %}
+    <p>{{ orderitem.user_design.text }}</p>
+    <form method="POST" action="{% url 'delete_design_text' orderitem.id orderitem.user_design.pk %}">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger">Delete Text</button>
     </form>
+    {% endif %}
 {% endif %}
-{% comment %} Add a submit design image / text form and a save /button {% endcomment %}
+
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <label for="design_image">Upload Design Image</label><br>

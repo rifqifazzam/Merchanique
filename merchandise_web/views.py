@@ -289,7 +289,6 @@ def checkout(request):
 @login_required(login_url='login')
 def purchase(request):
     user = request.user
-    
     orders = Order.objects.filter(user=user, orderitem__quantity__gt=0).distinct()
     order_items = []
     for order in orders:
@@ -306,7 +305,6 @@ def payment(request, pk):
     user = request.user
     order = Order.objects.get(id=pk)
     context = {'order': order}
-
     
     return render(request, 'payment.html', context)
  
@@ -339,8 +337,7 @@ def process_order(request, pk):
         order.payment_status = True
         tracking_number = request.POST['tracking_number']
         shipment.tracking_number = tracking_number
-        
-        
+          
         order.save()
         shipment.save()
         return redirect('manage_orders')
@@ -348,6 +345,7 @@ def process_order(request, pk):
 @login_required(login_url='login')
 def design(request, pk):
     orderitem = OrderItem.objects.get(id=pk)
+    product_image = orderitem.product.image if orderitem.product else None
     if request.method == 'POST':
         design_image = request.FILES.get('design_image')
         design_text = request.POST.get('design_text')
@@ -375,26 +373,28 @@ def design(request, pk):
     
     else:
         # if not a POST request, display the design page with the order item
-        context = {'orderitem': orderitem} 
+        context = {'orderitem': orderitem , 'product_image': product_image} 
         return render(request, 'design.html', context)
 
-
-def delete_design_image(request, pk):
-    user_design = get_object_or_404(UserDesign, pk=pk, user=request.user)
-    orderitem_id = user_design.orderitem.id 
+@login_required(login_url='login')
+def delete_design_image(request, pk1, pk2):
+    user_design = get_object_or_404(UserDesign, pk=pk2, user=request.user)
+    order_item = get_object_or_404(OrderItem, pk=pk1, user_design=user_design)
     if request.method == 'POST':
         # delete the image file and the UserDesign instance
-        user_design.image.delete()
-        return redirect('design', pk=orderitem_id) 
-    
+        if user_design.image: # Check if image exists before deleting it
+            user_design.image.delete()
+        user_design.image = None
+        user_design.save()
+        return redirect('design', pk=order_item.id)
 
 
 @login_required(login_url='login')
-def delete_design_text(request, pk):
-    user_design = get_object_or_404(UserDesign, pk=pk, user=request.user)
-    orderitem_id = user_design.orderitem.id 
+def delete_design_text(request, pk1, pk2):
+    user_design = get_object_or_404(UserDesign, pk=pk2, user=request.user)
+    order_item = get_object_or_404(OrderItem, pk=pk1, user_design=user_design)
     if request.method == 'POST':
         # delete the UserDesign instance
         user_design.text = None
         user_design.save()
-        return redirect('design', pk=orderitem_id) 
+        return redirect('design', pk=order_item.id) 

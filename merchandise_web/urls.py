@@ -19,6 +19,6 @@ urlpatterns = [
     path('order_detai/<int:pk>/', views.order_detail, name='order_detail'),
     path('process_order/<int:pk>/', views.process_order, name='process_order'),
     path('design/<int:pk>/', views.design, name='design'),
-     path('design/<int:pk>/delete-image/', views.delete_design_image, name='delete_design_image'),
-    path('design/<int:pk>/delete-text/', views.delete_design_text, name='delete_design_text'),
+    path('design/<int:pk1>/delete-image/<int:pk2>/', views.delete_design_image, name='delete_design_image'),
+    path('design/<int:pk1>/delete-text/<int:pk2>/', views.delete_design_text, name='delete_design_text'),
 ]
