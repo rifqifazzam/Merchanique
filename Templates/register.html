@@ -17,7 +17,7 @@
                     <input type="password" class="password2" name="password2" placeholder="Konfirmasi Kata Sandi">
                     <input type="submit" value="Daftar">
                 </form>
-                <div class="col-md-8">
+                <div id="error">
                     {% if errors %} {% for field, error in errors.items %}
                     {% comment %} <div class="alert alert-danger">{{ field }}: {{ error|join:", " }}</div> {% endcomment %}
                     <div class="alert alert-danger">{{ error|join:", " }}</div>

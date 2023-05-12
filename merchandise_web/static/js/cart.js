@@ -7,6 +7,7 @@ for(var i = 0; i < updateBtns.length; i++){
         console.log('USER:', user)
         if(user == 'AnonymousUser'){
             console.log('Not logged in')
+            alert('You need to login first to add items to your cart.')
         }else{
            updateUserOrder(productId, action)
         }

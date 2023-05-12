@@ -117,5 +117,6 @@ input[type="submit"][value="Login"] {
   color: #D9D9D9;
 }
 
-
-
+#error {
+  color: red;
+}

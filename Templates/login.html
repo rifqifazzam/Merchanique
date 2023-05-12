@@ -18,11 +18,11 @@
       
       <div>
         {% if messages %} {% for message in messages %}
-        <div class="{{ message.tag }}">{{ message }}</div>
+        <div class="{{ message.tag }}" id="error" ><p>{{ message }}</p></div>
         {% endfor%} {% endif %} 
       </div>  
-
     </div>
   </div>
 </div>
+
 {% endblock content %}

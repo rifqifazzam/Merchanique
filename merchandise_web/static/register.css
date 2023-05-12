@@ -86,3 +86,7 @@ input::placeholder {
   font-size: 18px;
   line-height: 18px;
 }
+
+#error{
+  color: red;
+}

@@ -7,17 +7,56 @@
 {% include 'navbar.html' %}
 
 <div class="container" href="">
-  {% comment %} Show user.email {% endcomment %}
-
-  <h1>Kategori Pilihan</h1>
-  <div class="categories">
-        {% for c in categorie %}
-        <div class="categorie">
-            <img src="{{c.image.url}}" alt="" class="categorie_img">
-            <a href="{% url 'category' c.pk %}" class="categorie_name" > {{c.name}}</a>
+  <section>
+    <div class="header">
+      <div class="header-container">
+        <div class="header-container-text">
+          <h1>MAKE YOUR OWN </br> SHIRT DESIGN</h1>
+          {% comment %} <a class="make-design">Make Design</a> {% endcomment %}
+          {% comment %} <button data-product="{{product.id}}" data-action="add" class="btn add-btn update-cart" >Add to Cart</button> {% endcomment %}
         </div>
-        {% endfor %}
-  </div> 
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="category-title">Kategori Pilihan</h2>
+    <div class="categories">
+          {% for c in categorie %}
+          <div class="categorie">
+              <img src="{{c.image.url}}" alt="" class="categorie_img">
+              <a href="{% url 'category' c.pk %}" class="categorie_name" > {{c.name}}</a>
+          </div>
+          {% endfor %}
+    </div> 
+  </section>
+
+  <section>
+    <div class="">
+    </div>
+  </section>
+
+  <section>
+    <div class="products">
+      <h2>Our Products</h2>
+      <div class="products-container">
+          <div class="product-wrapper">
+            {% for p in product %}
+            <div class="product">
+              <img src="{{p.image.url}}" alt="" class="product_img">  
+              <div class="product-info">
+                <h3 class="product-name">{{p.name}}</h3>
+                <p class="product-price">Rp. {{p.price}}</p>
+              </div>     
+              
+              <button data-product="{{p.id}}" data-action="add" class="btn add-btn update-cart" ><a href="">Add to Cart</a></button>     
+              
+            </div>
+            {% endfor %}
+          </div>
+      </div>
+    </div>
+  </section>
 
 </div>
 {% endblock content%}

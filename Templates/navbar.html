@@ -3,18 +3,17 @@
 
 <nav> 
     <ul>
+      <li><a href="" class="logostore">Merchanique</a></li>
         <li><a href="{% url 'homepage' %}">Home</a></li>
-       
-        {% if request.user.is_anonymous%}
-        <li><a href="{% url 'register' %}">Daftar</a></li>
-        <li><a href="{% url 'login' %}">Masuk</a></li>
-        {% endif %}
-        {% if request.user.is_authenticated %}
-        <li><a href="{% url 'logout' %}">Keluar</a></li>
-        <li class="userr"><a href="{% url 'profil' %}">{{ user }} </a></li>
-        <li><a href="{% url 'purchase' %}">Pembelian</a></li>
-        {% endif %}
-        <li>
+
+        <li class="dropdown">
+            <a href="#">Kategori</a>
+            <ul>
+                {% for category in categorie %}
+                    <li><a href="{% url 'category' category.id %}">{{ category.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </li>
         
         <li class="cart">
           {% if request.user.is_authenticated%}
@@ -30,6 +29,33 @@
             <p id="cart-total">{{cartItems}}</p></li>
           {% endif %}
         </li>
+
+        {% if request.user.is_anonymous%}
+        <li><a href="{% url 'login' %}" class="login">Masuk</a></li>
+        <li><a href="{% url 'register' %}" class="register">Daftar</a></li>
+        {% endif %}
+
+        {% if request.user.is_authenticated %}
+        <li class="dropdown user-profil">
+            <div class="profile-image-container">
+              <img src="{{ request.user.profile.image.url }}" alt="{{ request.user.username }} profile image" class="profile-image">
+              <a>{{ request.user.username }}</a>
+            </div>
+  
+            <ul>
+              <li><a href="{% url 'profil' %}">Profil</a></li>
+              <li><a href="{% url 'purchase' %}">Pembelian</a></li>
+              <li><a href="{% url 'logout' %}">Keluar</a></li>
+            </ul>
+        </li>
+        {% endif %}
+
+        {% comment %} {% if request.user.is_authenticated %}
+        <li><a href="{% url 'logout' %}">Keluar</a></li>
+        <li class="userr"><a href="{% url 'profil' %}">{{ user }} </a></li>
+        <li><a href="{% url 'purchase' %}">Pembelian</a></li>
+        {% endif %} {% endcomment %}
        
     </ul>
+    
 </nav>

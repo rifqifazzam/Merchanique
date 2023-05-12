@@ -3,28 +3,70 @@
 {% block content %}
 
 {% include 'navbar.html' %}
+{% load static %}
+<link rel="stylesheet" href="{% static '/profile.css' %}">
 
-<div class="container">
-    <h1>
-        This is the profile page
-    </h1>
-    <form action="/profil/" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <label for="username">Username</label>
-        <input type="text" name="username" value="{{user.username}}"><br>
-        <label for="email">Email</label>
-        <input type="text" name="email" value="{{user.email}}"><br>
-        <label for="phone">No. Telepon</label>
-        <input type="text" name="phone" value="{{user.profile.phone}}"><br>
-        <label for="address">Alamat</label>
-        <input type="text" name="address" value="{{user.profile.address}}"><br>
-        <label for="full_name">Nama lengkap</label>
-        <input type="text" name="full_name" value="{{user.profile.full_name}}"><br>
-        <img src="{{user.profile.image.url}}" alt="profile image" width="100px"><br>
-        <input type="file" name="image"><br>
-        <input type="submit" value="submit">
-    </form>
-    
+<div class="profile">
+    <div class="profile-container">
+        <h1>Profil Saya</h1>
+        <form action="/profil/" method="post" enctype="multipart/form-data">    
+            {% csrf_token %}
+            <div class="profile-info-wrapper">
+                 <div class="profile-form-wrapper">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" value="{{user.username}}" {% if not edit_mode %}disabled{% endif %}>
+                </div>
+                <div class="profile-form-wrapper">
+                    <label for="email">Email</label>
+                    <input type="text" name="email" value="{{user.email}}" {% if not edit_mode %}disabled{% endif %}>
+                </div>
+                <div class="profile-form-wrapper">
+                    <label for="phone">No. Telepon</label>
+                    <input type="text" name="phone" value="{{user.profile.phone}}" {% if not edit_mode %}disabled{% endif %}>
+                </div>
+                <div class="profile-form-wrapper">
+                    <label for="address">Alamat</label>
+                    <input type="text" name="address" value="{{user.profile.address}}" {% if not edit_mode %}disabled{% endif %}>
+                </div>
+                <div class="profile-form-wrapper">
+                    <label for="full_name">Nama lengkap</label>
+                    <input type="text" name="full_name" value="{{user.profile.full_name}}" {% if not edit_mode %}disabled{% endif %}>
+                </div>
+
+                <div class="button-container">
+                    <button type="button" id="edit-button" onclick="toggleEdit()">Edit</button>
+                    <button type="button" class="simpan-button"><input type="submit" value="Simpan" id="simpan-button" {% if not edit_mode %}disabled{% endif %}></input></button>
+                </div>
+            </div>
+            <hr class="">
+            <div class="profile-img-wrapper">
+                <img src="{{user.profile.image.url}}" alt="profile image" width="100px"><br>
+                <input type="file" name="image"><br>
+            </div>
+        </form>
+    </div>
 </div>
+<script>
+    function toggleEdit() {
+        var editButton = document.getElementById("edit-button");
+        var submitButton = document.getElementById("simpan-button");
 
+        var formInputs = document.querySelectorAll(".profile-form-wrapper input");
+        if (editButton.innerHTML == "Edit") {
+            editButton.innerHTML = "Batal";
+            submitButton.removeAttribute("disabled");
+            for (var i = 0; i < formInputs.length; i++) {
+                formInputs[i].removeAttribute("disabled");
+            }
+        }
+        else {
+            editButton.innerHTML = "Edit"
+            submitButton.setAttribute("disabled", "");
+            for (var i = 0; i < formInputs.length; i++) {
+                formInputs[i].setAttribute("disabled", "");
+            }
+
+        }
+    }
+</script>
 {% endblock content %}

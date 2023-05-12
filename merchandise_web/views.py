@@ -33,27 +33,7 @@ def register(request):
             return render(request, 'register.html', {'form': form, 'errors': errors})
     elif request.method == 'GET':
         return render(request, 'register.html')
-
-def index(request):
-    if request.user.is_authenticated:
-        user = request.user
-        order, created = Order.objects.get_or_create(user=user, complete=False)
-        items = order.orderitem_set.all()
-        cartItems = order.get_total_items
-    else:
-        items = []
-        order = {'get_cart_total': 0, 'get_total_items': 0}
-        cartItems = order['get_total_items']
-       
-    products = Product.objects.all()
-    categories = Categorie.objects.all()
-    context = {
-        'product': products,
-        "categorie": categories,
-        'cartItems': cartItems,
-    }
-    return render(request, 'homepage.html', context)
-
+    
 def loginview(request):
     form = UserCreationForm(request.POST)
     if request.user.is_authenticated:
@@ -77,6 +57,28 @@ def logoutview(request):
     logout(request)
     return redirect('homepage')
 
+def index(request):
+    if request.user.is_authenticated:
+        user = request.user
+        order, created = Order.objects.get_or_create(user=user, complete=False)
+        items = order.orderitem_set.all()
+        cartItems = order.get_total_items
+    else:
+        items = []
+        order = {'get_cart_total': 0, 'get_total_items': 0}
+        cartItems = order['get_total_items']
+       
+    products = Product.objects.all()
+    categories = Categorie.objects.all()
+    context = {
+        'product': products,
+        "categorie": categories,
+        'cartItems': cartItems,
+    }
+    return render(request, 'homepage.html', context)
+
+
+
 @login_required(login_url='login')
 def profile(request):
     if request.method == 'GET':
@@ -93,9 +95,11 @@ def profile(request):
             cartItems = order['get_total_items']
 
         profile = Profile.objects.get(user=request.user)
+        categories = Categorie.objects.all()
         context = {
             'profile': profile,
             'cartItems': cartItems,
+            'categorie': categories,
         }
         return render(request, 'profil.html', context)
     
@@ -155,10 +159,12 @@ def product_detail(request, product_id):
     # Kode untuk menampilkan detail product
     product = Product.objects.get(id=product_id)
     product_images = ProductImg.objects.filter(product=product)
+    categories = Categorie.objects.all()
     context = {
         'product': product,
         'cartItems': cartItems,
         'product_images': product_images,
+        'categorie': categories,
     }
     return render(request, 'product_detail.html', context)
 
@@ -176,11 +182,13 @@ def product_category(request, category_id):
 
     category = Categorie.objects.get(id=category_id)
     products = Product.objects.filter(category=category)
+    categories = Categorie.objects.all()
     
     context = {
         'product': products,
         'category': category,
         'cartItems': cartItems,
+        'categorie': categories,
     }
     return render(request, 'product_category.html', context)
 
@@ -233,7 +241,8 @@ def cart(request):
     order, created = Order.objects.get_or_create(user=user, complete=False)
     items = order.orderitem_set.all()
     cartItems = order.get_total_items    
-    context = {'items': items, 'order': order, 'cartItems': cartItems}
+    categories = Categorie.objects.all()
+    context = {'items': items, 'order': order, 'cartItems': cartItems, 'categorie': categories}
 
     return render(request, 'cart.html', context)
 
@@ -246,19 +255,24 @@ def checkout(request):
         items = order.orderitem_set.all()
         cartItems = order.get_total_items 
         payments = Payment.objects.all()
-        context = { 'expeditions': expeditions ,  'items' : items, 'order': order, 'payments' : payments,  'cartItems': cartItems,}
+        categories = Categorie.objects.all()
+        context = { 'expeditions': expeditions ,  'items' : items, 'order': order, 'payments' : payments,  'cartItems': cartItems, 'categorie': categories}
         return render(request, 'checkout.html', context)
     
     elif request.method == 'POST':
         user = request.user
+        full_name = request.POST['full_name']
+        phone = request.POST['phone']
+        address = request.POST['address']
+        email = request.POST['email']
+
         city = request.POST['city']
         province = request.POST['province']
         zipcode = request.POST['zipcode']
-        address = request.POST['address']
+
         
         order, created = Order.objects.get_or_create(user=user, complete=False)
         Shipment.objects.create(
-            user=user,
             order=order,
             address=address,
             city=city,
@@ -282,6 +296,11 @@ def checkout(request):
 
         order.date_ordered = timezone.now()
         order.payment = payment
+        order.full_name = full_name
+        order.phone = phone
+        order.address = address
+        order.email = email
+        
         order.complete = True
         order.save()
         return redirect('purchase')
@@ -295,7 +314,8 @@ def purchase(request):
         order_items.append(order.orderitem_set.all())
 
     shipments = Shipment.objects.filter(user=user, order__payment_status=True)   
-    context = { 'orders': orders, 'order_items': order_items, 'shipments': shipments,}  
+    categories = Categorie.objects.all()
+    context = { 'orders': orders, 'order_items': order_items, 'shipments': shipments, 'categorie': categories}  
     return render(request, 'purchase.html', context)
 
 

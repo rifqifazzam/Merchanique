@@ -76,6 +76,11 @@ class Order(models.Model):
     payment = models.ForeignKey(Payment, on_delete=models.SET_NULL, blank=True, null=True)
     payment_status = models.BooleanField(default=False, null=True, blank=False)
     virtual_account = models.CharField(max_length=200, null=True, blank=True)
+
+    full_name = models.CharField(max_length=200, blank=True)
+    phone = models.CharField(max_length=20, blank=True)
+    address = models.CharField(max_length=200, blank=True)
+    email = models.CharField(max_length=200, blank=True)    
     
     def __str__(self):
         return str(self.id)
