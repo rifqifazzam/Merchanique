@@ -9,7 +9,6 @@
 }
 
 
-
 nav {
   color: white;
   display: flex;
@@ -108,7 +107,7 @@ nav a:hover {
   display: none;
   position: absolute;
   z-index: 1;
-  width: 150px;
+  width: 250px;
 }
 
 .dropdown:hover ul {
