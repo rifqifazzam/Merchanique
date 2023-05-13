@@ -29,10 +29,13 @@
             <a href="{% url 'design' item.id %}">Customize design</a>
             {% endif %}
             <p>Rp{{item.product.price}}</p>
+            <p>{{item.size}}</p>
             <div  class="box">
-                <img data-product="{{item.product.id}}" data-action="add" class="chg-quantity update-cart" src="" alt="+" >
+                {% comment %} <img data-product="{{item.product.id}}" data-action="add" class="chg-quantity update-cart" src="" alt="+" > {% endcomment %}
+                <img data-product="{{item.id}}" data-action="add" class="chg-quantity update-cart2" src="" alt="+" >
                 <p class="quantity">{{item.quantity}}</p>
-				<img data-product="{{item.product.id}}" data-action="remove" class="chg-quantity update-cart" src="" alt="-">
+                <img data-product="{{item.id}}" data-action="remove" class="chg-quantity update-cart2" src="" alt="-" >
+				{% comment %} <img data-product="{{item.product.id}}" data-action="remove" class="chg-quantity update-cart" src="" alt="-"> {% endcomment %}
             </div>
             <p>Total Rp{{item.get_total}}</p>
         </div>

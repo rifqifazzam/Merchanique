@@ -1,41 +1,66 @@
 {% extends 'base.html'%}
 {% block title %}Profil{% endblock title %}
 {% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static '/productdetail.css' %}">
 
 {% include 'navbar.html' %}
 
 <div class="container">
-    <h1>{{product.name}} </h1>
     <div>
         {% if messages %}
             {% for message in messages %}
                 <div class="alert alert-{{ message.tags }} success-message">{{ message }}</div>
             {% endfor %}
         {% endif %}
-
-      </div>  
+    </div>  
     <div class="product">
-        {% comment %} product image: <img src="{{product.image.url}}" alt="product image" width="200" height="200"> <br> {% endcomment %}
-        <img id="mainImage" src="{{ product_images.first.image.url }}" alt="{{ product_images.first.description }}" width="200" height="200"><br>
-        <div class="row">
-          {% for image in product_images %}
-            <div class="col-md-4">
-              <img src="{{ image.image.url }}" alt="{{ image.description }}" class="thumbnail" onclick="updateMainImage('{{ image.image.url }}')" width="50" height="50">
-              <p>{{ image.description }}</p>
+      <div class="Product-Image-Wrapper">
+          <div class="Main-Image-Container">
+            <img id="Main-Image" src="{{ product_images.first.image.url }}" alt="{{ product_images.first.description }}" width="200" height="200" class="mainImage"><br>
+          </div>
+          <div class="Image-Row-Container">
+            {% for image in product_images %}
+            <div class="Image-Col {% if forloop.first %}active{% endif %}" onclick="updateMainImage('{{ image.image.url }}', this)">
+              <img src="{{ image.image.url }}" alt="{{ image.description }}" class="thumbnail" width="50" height="50">
             </div>
           {% endfor %}
-        </div></br>
-        product price: {{product.price}} <br>
-        product description: {{product.description}} <br>  
-        product category: {{product.category}} <br>
+          
+          </div>
+        </div>
+        <div class="Product-Info-Wrapper">
+          <h1>{{product.name}} </h1>
+          <p>Category: {{product.category}}</p>
+          <h2>Rp {{product.price}},00 </h2>
+          <p>{{product.description}} </p>  
+
+          {% if product.variantble %}
+          <h3>Available Sizes:</h3>
+          {% endif %}
+          <form id="add-to-cart-form" method="post">
+              {% csrf_token %}
+             {% if product.variantble %}
+                <select name="size" required>
+                    <option value="">Select a size</option>
+                    {% for variant in product.variants.all %}
+                        <option value="{{ variant.id }}">{{ variant.size }}</option>
+                    {% endfor %}
+                </select>
+            {% endif %}
+
+              <br><br>
+              <label for="quantity">Quantity:</label>
+              <input type="number" id="quantity" name="quantity" value="1" min="1">
+              <br><br>
+              <button type="submit" class="btn btn-primary">Add to Cart</button>
+          </form>
+        </div>
+       
     </div>
-    <button data-product="{{product.id}}" data-action="add" class="btn add-btn update-cart" >Add to Cart</button>
 </div>
 
 <script>
-  // Get the main product image
-  const mainImage = document.getElementById('mainImage');
-  // Function to update the main product image
+  const mainImage = document.getElementById('Main-Image');
   function updateMainImage(url) {
     mainImage.src = url;
   }
@@ -49,4 +74,23 @@
     }, 1000);
 </script>
 
+
+<script>
+// ...
+
+function updateMainImage(url, el) {
+  mainImage.src = url;
+
+  // Remove 'active' class from all thumbnail images
+  document.querySelectorAll('.thumbnail').forEach(thumb => {
+    thumb.parentNode.classList.remove('active');
+  });
+
+  // Add 'active' class to the clicked thumbnail image
+  el.classList.add('active');
+}
+
+// ...
+
+</script>
 {% endblock content %}

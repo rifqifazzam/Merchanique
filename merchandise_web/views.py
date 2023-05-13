@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .models import Product, Categorie, Profile, Order, OrderItem, Expedition, Shipment, Payment, ProductImg, UserDesign
+from .models import Product, Categorie, Profile, Order, OrderItem, Expedition, Shipment, Payment, ProductImg, UserDesign, ProductVariant
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib import messages
@@ -145,28 +145,62 @@ def profile(request):
         return render(request, 'profil.html', context)
 
 def product_detail(request, product_id):
-    # Showing the total cart items in navbar
-    if request.user.is_authenticated:
+    product = Product.objects.get(id=product_id)
+    if request.method == 'GET':
+        # Showing the total cart items in navbar
+        if request.user.is_authenticated:
+            user = request.user
+            order, created = Order.objects.get_or_create(user=user, complete=False)
+            items = order.orderitem_set.all()
+            cartItems = order.get_total_items
+        else:
+            items = []
+            order = {'get_cart_total': 0, 'get_total_items': 0}
+            cartItems = order['get_total_items']
+
+        product_images = ProductImg.objects.filter(product=product)
+        categories = Categorie.objects.all()
+        product_variants = ProductVariant.objects.filter(product=product)
+
+        context = {
+            'product': product,
+            'cartItems': cartItems,
+            'product_images': product_images,
+            'categorie': categories,
+            'product_variants': product_variants,
+        }
+        return render(request, 'product_detail.html', context)
+    elif request.method == 'POST':
+        # Get the current user's cart
         user = request.user
         order, created = Order.objects.get_or_create(user=user, complete=False)
-        items = order.orderitem_set.all()
-        cartItems = order.get_total_items
-    else:
-        items = []
-        order = {'get_cart_total': 0, 'get_total_items': 0}
-        cartItems = order['get_total_items']
 
-    # Kode untuk menampilkan detail product
-    product = Product.objects.get(id=product_id)
-    product_images = ProductImg.objects.filter(product=product)
-    categories = Categorie.objects.all()
-    context = {
-        'product': product,
-        'cartItems': cartItems,
-        'product_images': product_images,
-        'categorie': categories,
-    }
-    return render(request, 'product_detail.html', context)
+        quantity = int(request.POST.get('quantity', 1))
+        # If the product is variantable, get the selected variant
+        if product.variantble:
+            size_id = request.POST.get('size') 
+            size = ProductVariant.objects.get(id=size_id).size
+        else:
+            size = None
+
+        order_item, created = OrderItem.objects.get_or_create(
+            order=order,
+            product=product,
+            size=size,
+        )
+
+        if created:
+            order_item.quantity = quantity
+            order_item.size = size
+        else:
+            order_item.quantity += quantity
+        order_item.save()
+
+        messages.success(request, f'{quantity}x {product.name} {size} was successfully added to your cart.')
+
+        return redirect('product_detail', product_id=product.id)
+
+
 
 def product_category(request, category_id):
     # Showing the total cart items in navbar
@@ -182,6 +216,7 @@ def product_category(request, category_id):
 
     category = Categorie.objects.get(id=category_id)
     products = Product.objects.filter(category=category)
+
     categories = Categorie.objects.all()
     
     context = {
@@ -218,6 +253,40 @@ def updateItem(request):
     order, created = Order.objects.get_or_create(user=user, complete=False)
 
     orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
+
+    if action == 'add':
+        orderItem.quantity = (orderItem.quantity + 1)
+        messages.success(request, f'Item was successfully added')
+        orderItem.save()
+        # Render message item suces fully added
+        return JsonResponse({'success': 'Item was added'}, status=200)
+
+    elif action == 'remove':
+        orderItem.quantity = (orderItem.quantity - 1)
+        orderItem.save()
+
+    if orderItem.quantity <= 0:
+        orderItem.delete()
+
+    return JsonResponse('Item was added', safe=False)
+
+def updateItem2(request):
+    data = json.loads(request.body)
+    itemId = data['productId']
+    action = data['action']
+
+    print('Action:', action)
+    print('itemId:', itemId)
+
+    user = request.user
+    orderItem = OrderItem.objects.get(id=itemId)
+    # get he orderItem size
+    size = orderItem.size
+
+    product = orderItem.product
+    order, created = Order.objects.get_or_create(user=user, complete=False)
+
+    orderItem, created = OrderItem.objects.get_or_create(order=order, product=product, size = size)
 
     if action == 'add':
         orderItem.quantity = (orderItem.quantity + 1)

@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Categorie, Product, Expedition, Profile, Order, OrderItem, Expedition, Payment, Shipment, ProductImg, UserDesign
+from .models import Categorie, Product, Expedition, Profile, Order, OrderItem, Expedition, Payment, Shipment, ProductImg, UserDesign, ProductVariant
 admin.site.register(Categorie)
 admin.site.register(Product)
 admin.site.register(Expedition)
@@ -12,5 +12,8 @@ admin.site.register(Payment)
 admin.site.register(Shipment)
 admin.site.register(ProductImg)
 admin.site.register(UserDesign)
+admin.site.register(ProductVariant)
+
+
 
 

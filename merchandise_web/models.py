@@ -18,8 +18,10 @@ class Product(models.Model):
     description = models.TextField(max_length=1000, help_text='Enter description of the product', null=True, blank=True)
     image = models.ImageField(upload_to='images/product/', null=True, blank=True)
     designable = models.BooleanField(default=False, null=True, blank=False)
+    variantble = models.BooleanField(default=False, null=True, blank=False)
+    stock = models.PositiveIntegerField(default=0)
     
-    def __str__(self):
+    def __str__(self): 
         return self.name
     
     def get_absolute_url(self):
@@ -31,6 +33,20 @@ class ProductImg(models.Model):
     
     def __str__(self):
         return self.product.name + ' - ' + str(self.id)
+    
+class ProductVariant(models.Model):
+    SIZE_CHOICES = [
+        ('S', 'Small'),
+        ('M', 'Medium'),
+        ('L', 'Large'),
+    ]
+
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='variants', null=True, blank=True)
+    size = models.CharField(choices=SIZE_CHOICES, max_length=1)
+    # stock = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.product.name} - {self.get_size_display()}"
 
 class Expedition(models.Model):
     name = models.CharField(max_length=200, null=True, blank=True)
@@ -113,7 +129,8 @@ class OrderItem(models.Model):
     quantity = models.IntegerField(default=0, null=True, blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
     user_design = models.ForeignKey(UserDesign, on_delete=models.SET_NULL, blank=True, null=True)
-    
+    size = models.CharField(max_length=50, blank=True, null=True) # New field for variant
+
     def __str__(self): 
         return str(self.id)
     
