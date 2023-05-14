@@ -4,31 +4,78 @@
 
 {% include 'navbar.html' %}
 {% load static %}
-
+<link rel="stylesheet" href="{% static '/checkout.css' %}">
 <div class="container">
     <form method="post" >
         {% csrf_token %}
         <h1>Checkout</h1>
-        <p>Shipping info</p>
-        <div id="shipping-info">
-            <label for="full_name">Nama lengkap</label>
-            <input type="text" name="full_name" value="{{user.profile.full_name}}"><br>
-            <label for="email">Email</label>
-            <input type="text" name="email" value="{{user.email}}"><br>
-            <label for="phone">No. Telepon</label>
-            <input type="text" name="phone" value="{{user.profile.phone}}"><br>
+<div class="container23">
+    <div class="container2">
+        <p>Shipping Information</p>
+        
+        <div class="containernamaemail">
+            
+        
+            <div class="namacity">
+        
+        <div class="namacity2">
+            <div class="kotakatas atas">
+            <label for="address">Nama lengkap</label>
+            <input type="text" name="kotakatas" value="{{user.profile.full_name}}"><br>
+            </div>
+
+            <div class="kotakatas">
             <label for="address">Alamat</label>
-            <input type="text" name="address" value="{{user.profile.address}}"><br>
+            <input type="text" name="kotakatas" value="{{user.profile.address}}"><br>
+            </div>
+            <div class="namacity3">
+                <div class="kotakbawah city">
+                <label for="address">City</label>
+                <input type="text" name="kotakbawah" value="" required><br>
+                </div>
+    
+                <div class="kotakbawah province">
+                <label for="address">Province</label>
+                <input type="text" name="kotakbawah" value="" required><br>
+                </div>
         </div>
 
-        <div id="shipping-address">
-            <label for="city">City</label>
-            <input type="text" name="city" value="" required><br>
-            <label for="province">Province</label>
-            <input type="text" name="province" value="" required><br>
-            <label for="address">Zip Code</label>
-            <input type="text" name="zipcode" value="" required><br>
+       
         </div>
+            </div>
+
+            <div class="emailzip">
+        
+        <div class="namacity2">
+
+            <div class="kotakatas atas">
+            <label for="address">Email</label>
+            <input type="text" name="kotakatas" value="{{user.email}}"><br>
+            </div>
+
+            <div class="kotakatas">
+            <label for="address">No. Telepon</label>
+            <input type="text" name="kotakatas" value="{{user.profile.phone}}"><br>
+            </div>
+            <div class="namacity3">
+
+                <div class="kotakbawah city">
+                <label for="address">Country</label>
+                <input type="text" name="kotakbawah" value="" required><br>
+                </div>
+            
+                <div class="kotakbawah province">
+                <label for="address">Zip Code</label>
+                <input type="text" name="kotakbawah" value="" required><br>
+                </div>
+            </div>
+        </div>
+
+        
+
+            </div>
+        </div>
+       
 
         <div id="shipping-method">
             <p>Please select a shipping method</p>
@@ -38,15 +85,49 @@
             {% endfor %}
         </div>
 
+    </div>
+
+
+    <div class ="container3">
         <div class="order-summary">
-            <p>Order Summary - #{{ order.transaction_id }} </p>
-            <p> product  - quantity</p>
+        
+        <div class="order-summary1">
+            <div class="kotakjudul">
+            <p class="judul-order-summary1">Order Summary - #{{ order.transaction_id }} </p>
+
+            </div>
+
+            <div class="datetime">
+                <p><span>Date</span><span>#date</span></p>
+                <p><span>Time</span><span>#Time</span></p>
+              </div>
+            
+
+        </div>
+
+        <div class="order-summary2">
+            
+            <p class="suborder2"><span>Product</span><span>Quantity</span></p>
+            
+            <div class="suborder3">
             {% for item in items%}
-            <p>{{item.product.name}} : {{item.quantity}}</p>
+            <p class="item"><span>{{item.product.name}}</span><span>{{item.quantity}}</span></p>
             {% endfor %}
-            <p>Total : {{order.get_cart_total}}</p>
-            <p>Shipping Cost : 0</p>
-            <p>Payment Method</p>
+            </div>
+        </div>
+
+        <div class="order-summary3">
+            <div class="totalship">
+                <p class="totalitem"><span>Total</span><span>{{order.get_cart_total}}</span></p>
+                <p class="shipcost"> <span>Shipping Cost</span><span>0</span></p>
+                
+                </div>
+        
+          
+        
+           
+            <div class ="pmethod"> 
+                <p>Payment Method</p>  
             <select name="payment">
             {% for payment in payments %}
                 <option value="{{payment.id}}">{{payment.name}}</option>
@@ -55,7 +136,13 @@
 
         <hr>
         <input type="submit" class="btn btn-success" value="Continue">
+    </div>
+    </div>
     </form>
 </div>
+</div>
+</div>
+
+
 
 {% endblock content %}
