@@ -15,11 +15,8 @@
   flex-direction: column;
   flex: 50%;
   margin-right: 10%;
-  
-  
+   
 }
-
-
 
 .containernamaemail{
   display: flex;
@@ -27,16 +24,8 @@
   align-items: flex-start;
   background: #F2EFEF;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-border-radius: 10px;
+  border-radius: 10px;
 
-}
-
-.namacity{
-  
-}
-
-.emailzip{
-  
 }
 
 .namacity2{
@@ -64,16 +53,16 @@ border-radius: 10px;
   flex-direction: column;
   align-items: flex-start;
   background: #FFFFFF;
-border: 1px solid #DEDBDB;
-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-border-radius: 10px;
-width : 100%;
+  border: 1px solid #DEDBDB;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  width : 100%;
 
-margin-top : 2%;
+  margin-top : 2%;
 
-padding-left: 5%;
-padding-top: 3%;
-margin-bottom: 5%;
+  padding-left: 5%;
+  padding-top: 3%;
+  margin-bottom: 5%;
 
 }
 
@@ -83,14 +72,14 @@ margin-bottom: 5%;
   align-items: flex-start;
   width: 50%;
   background: #FFFFFF;
-border: 1px solid #DEDBDB;
-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-border-radius: 10px;
-margin-bottom: 5%;
-margin-right: 0%;
-margin-left: auto;
-padding-left: 5%;
-padding-top: 3%;
+  border: 1px solid #DEDBDB;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  margin-bottom: 5%;
+  margin-right: 0%;
+  margin-left: auto;
+  padding-left: 5%;
+  padding-top: 3%;
 
 
 }
@@ -108,7 +97,7 @@ input[name="kotakbawah"] {
   border:none;
 }
 
-input[name="kotakatas"] {
+input[name="full_name"] {
   width:70%;
   border:none;
 }
@@ -120,16 +109,14 @@ label[for="address"] {
 
 
 
-
-
 .container3{
   display: flex;
   flex-direction: column;
   flex:30%;
   background: #F2EFEF;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-border-radius: 10px;
-padding:1% 2%;
+  border-radius: 10px;
+  padding:1% 2%;
  
 }
 
