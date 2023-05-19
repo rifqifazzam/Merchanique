@@ -2,14 +2,33 @@
 {% block title %}Payment{% endblock title %}
 {% block content %}
 {% include 'navbar.html' %}
-{% comment %} make an Ok button {% endcomment %}
-<p>Virtual account number: <span>{{ order.virtual_account}}</span></p>
-<p>Payment time: <span id="countdown-timer"></span></p>
-<p>Payment method: <span>{{ order.payment }}</span></p>
-<p>Total payment: <span>Rp {{ order.get_cart_total }}</span></p>
-<p>Total payment: <span>Rp {{ order.get_total_payment }}</span></p>
-<p>Shipping: <span>{{ order.expedition }}</span></p>
-<a href="{% url 'purchase' %}" class="btn btn-primary">Ok</a>
+{% load static %}
+<link rel="stylesheet" href="{% static '/payment.css' %}">
+
+<div class="overlay"></div>
+<div class="popup-container">
+<div class="container">
+  <div class="textok">
+    <div class="judul">
+      <p> order # </p>
+    </div>
+
+    <div class="container2">
+      <p>VA <span>{{ order.virtual_account}}</span></p>
+      <p>Payment time <span id="countdown-timer"></span></p>
+      <p>Payment method <span>{{ order.payment }}</span></p>
+      <p>Sub Total <span>Rp{{ order.get_cart_total }}</span></p>
+      <p>Total payment <span>Rp{{ order.get_total_payment }}</span></p>
+      <p>Shipping <span>{{ order.expedition }}</span></p>
+    </div>
+
+    <div class="container3">
+      <button onclick="window.location.href='{% url 'purchase' %}'" class="btnok">OK</button>
+    <div>
+  <div>
+  
+</div>
+</div>
 
 <script>
     var countDownDate = new Date('{{ order.date_ordered|date:"Y/m/d H:i:s" }}').getTime() + (5*60*1000); // add 1 hour to the order date
@@ -31,6 +50,22 @@
         // add code to delete the order here
       }
     }, 1000);
+
+
+    // Open the popup
+function openPopup() {
+  document.querySelector('.overlay').style.display = 'block';
+  document.querySelector('.popup-container').style.display = 'block';
+}
+
+// Close the popup
+function closePopup() {
+  document.querySelector('.overlay').style.display = 'none';
+  document.querySelector('.popup-container').style.display = 'none';
+}
+
+// Call openPopup() function to open the popup when needed
+
 </script>
 
     
