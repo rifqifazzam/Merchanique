@@ -24,7 +24,9 @@
     <div class="categories">
           {% for c in categorie %}
           <div class="categorie">
-              <img src="{{c.image.url}}" alt="" class="categorie_img">
+              <a href="{% url 'category' c.pk %}">
+                <img src="{{c.image.url}}" alt="" class="categorie_img">
+              </a>
               <a href="{% url 'category' c.pk %}" class="categorie_name" > {{c.name}}</a>
           </div>
           {% endfor %}
@@ -42,16 +44,15 @@
       <div class="products-container">
           <div class="product-wrapper">
             {% for p in product %}
-            <div class="product">
-              <img src="{{p.image.url}}" alt="" class="product_img">  
-              <div class="product-info">
-                <h3 class="product-name">{{p.name}}</h3>
-                <p class="product-price">Rp. {{p.price}}</p>
-              </div>     
-              
-              {% comment %} <button data-product="{{p.id}}" data-action="add" class="btn add-btn update-cart" ><a href="">Add to Cart</a></button>      {% endcomment %}
-              
-            </div>
+            <a href="{% url 'product_detail' p.id %}">
+              <div class="product">
+                <img src="{{p.image.url}}" alt="" class="product_img">  
+                <div class="product-info">
+                  <h3 class="product-name">{{p.name}}</h3>
+                  <p class="product-price">Rp. {{p.price}}</p>
+                </div>     
+              </div>
+            </a>
             {% endfor %}
           </div>
       </div>

@@ -140,11 +140,11 @@
     margin-left: auto;
     margin-top: auto;
     margin-bottom: auto;
-
     font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
     font-size: 13px;
+    color:#1F1F1F;
 }
 .product-name{
     font-family: 'Inter';
@@ -152,6 +152,7 @@
     font-weight: 500;
     font-size: 15px;
     line-height: 18px;
+    color:#1F1F1F;
 
 }
 
@@ -165,13 +166,19 @@
   }
 
 
-  .add-btn:focus {
+.add-btn:focus {
     /* add any styling you want for the button when it's clicked */
     background-color: #54007B;
     color: white;
-  }
+}
 
 
 .products{
     margin-bottom:10% ;
 }
+
+.product-wrapper a {
+    /* Add your specific styles here */
+    color: blue;
+    text-decoration: none;
+  }
