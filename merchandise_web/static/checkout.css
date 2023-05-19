@@ -66,7 +66,18 @@
 
 }
 
-.kotakbawah{
+
+
+.inputkotak{
+  border: none;
+}
+
+
+
+
+
+
+.kotakbawah {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -92,20 +103,13 @@
   margin-right:5%
 }
 
-input[name="kotakbawah"] {
-  width:70%;
-  border:none;
+
+
+.kotakbawah2{
+  border: none;
+  width : 80%
 }
 
-input[name="full_name"] {
-  width:70%;
-  border:none;
-}
-
-label[for="address"] {
-  color: #868686;
-  font-size: 13px;
-}
 
 
 
@@ -131,9 +135,7 @@ label[for="address"] {
   background: #FFFFFF;
   border-radius: 5px;
   /* padding: 2px 0; */
-  text-align: center;
-  
-  
+  text-align: center;  
 }
 
 .judul-order-summary1{
@@ -206,6 +208,16 @@ font-size: 24px;
 line-height: 29px;
   color: #FFFFFF;
 }
+
+.namasemua{
+  color: #868686;
+}
+
+label.namasemua[for="address"]{
+  color: #868686;
+  font-size: 12px;
+}
+
 
 
 
