@@ -12,14 +12,15 @@
     </div>
     <div class="products">
         {% for p in product %}
-        <div class="product">
-            <div class="image-container">
-                <img src="{{ p.image.url }}" alt="" class="product_img">
+        <a href="{% url 'product_detail' p.pk %}" >
+            <div class="product">
+                <div class="image-container">
+                    <img src="{{ p.image.url }}" alt="" class="product_img">
+                </div>
+                <p class="name">{{ p.name }}</p>
+                <p class="price">Rp{{ p.price }}</p>
             </div>
-            <p class="name">{{ p.name }}</p>
-            <p class="price">Rp{{ p.price }}</p>
-            <a href="{% url 'product_detail' p.pk %}" >detail</a>
-        </div>
+        </a>
         {% endfor %}
     </div>
 </div>

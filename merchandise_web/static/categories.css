@@ -50,6 +50,7 @@ h1 {
   font-style: normal;
   font-weight: 600;
   font-size: 13px;
+  color: #1F1F1F;
 }
 .product .price {
   margin: 0;
@@ -68,4 +69,11 @@ h1 {
 
 .products > div {
   margin-right: 50px;
+}
+
+
+.products a{
+    /* Add your specific styles here */
+    color: blue;
+    text-decoration: none;
 }
