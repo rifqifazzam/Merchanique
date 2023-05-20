@@ -26,19 +26,28 @@
             </div>
           {% endfor %}
           
-          </div>
-        </div>
-        <div class="Product-Info-Wrapper">
+      </div>
+    </div>
+        
+    <div class="Product-Info-Wrapper">
+      
+      <div class="productinfoatas">
           <h1>{{product.name}} </h1>
           <p>Category: {{product.category}}</p>
           <h2>Rp {{product.price}},00 </h2>
-          <p>{{product.description}} </p>  
+          <h3>{{product.description}} </h3>  
+      </div>
 
+          
+      <div class="productinfobawah">
+        
+        
+        <div class="selectoption">
           {% if product.variantble %}
-          <h3>Available Sizes:</h3>
           {% endif %}
           <form id="add-to-cart-form" method="post">
               {% csrf_token %}
+          
              {% if product.variantble %}
                 <select name="size" required>
                     <option value="">Select a size</option>
@@ -46,17 +55,23 @@
                         <option value="{{ variant.id }}">{{ variant.size }}</option>
                     {% endfor %}
                 </select>
+        </div>
             {% endif %}
+       
 
-              <br><br>
-              <label for="quantity">Quantity:</label>
+              <br>
+        <div class="infoquantity">
+              <label for="quantity">Quantity</label>
               <input type="number" id="quantity" name="quantity" value="1" min="1">
               <br><br>
-              <button type="submit" class="btn btn-primary">Add to Cart</button>
-          </form>
         </div>
-       
-    </div>
+              
+        <div class="buttonsubmit">
+              <button type="submit" class="btn btn-primary">Add to Cart</button>
+        </div>
+          
+              </form>
+      </div>
 </div>
 
 <script>
