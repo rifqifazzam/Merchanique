@@ -10,7 +10,7 @@
 
 
 <div class="container">
-        {% for  order in orders %}
+    {% for  order in orders %}
     
     <div class ="containerorder2">
         <div class="kotakkiri">
@@ -21,25 +21,30 @@
                 <div class="cart-item">
                     <div class="subcart">
                         <div class="image">
+                            {% if item.product.image%}
+                            <img class="cart-item-image" src="{{item.product.image.url}}" width="65" height="65">
+                            {% else %}
                             <img class="cart-item-image" src="" width="65" height="65">
+                            {% endif %}
                         </div>
                         <div class="itemtittle">
-                        <span class="cart-item-title">{{item.product.name}}</span>
-                        <p class="quantity">Qty: {{item.quantity}}</p>
+                            <span class="cart-item-title">{{item.product.name}}</span>
+                            <p class="quantity">Qty: {{item.quantity}}</p>
+                            <p class="size">Size: {{item.size}}</p>
                         </div>
                     </div>
                     
                     <div class="harga">
-                    <p>Rp{{item.get_total}}</p>
+                        <p>Rp{{item.get_total}}</p>
                     </div>
                 </div>
-
                 {% endfor %}
             </div>
+
         </div>
         
         <div class="kotakkanan">
-            <div class="statuspayment">
+            <div class="statuspayment {% if order.payment_status %}paid{% else %}unpaid{% endif %}">
                 {% if order.payment_status %}
                     <p>Status: Paid</p>
                 {% else %}
@@ -62,27 +67,32 @@
                         <p><span>Total</span><span>Rp{{ order.get_cart_total }}</span></p>
                     </div>
                 </div>
-                <div class="infobutton">
-                {% if order.payment_status%}
-                    {% for shipment in shipments %}
-                        {% if shipment.order == order %}
-                            <p>Tracking Number:  {{ shipment.tracking_number }}</p>
-                        {% else %}
-                            <p>City: - </p>
-                        {% endif %}
-                    {% endfor %}
-                {% else %}
-                    {% comment %} make a payment detail button {% endcomment %}
-                    <button onclick="window.location.href='{% url 'payment' order.pk %}'">Payment details</button>
-                </div>
+
+                    
+                    {% if order.payment_status%}
+                    <div class="infobutton1">
+                        {% for shipment in shipments %}
+                            {%  if shipment.order == order %}
+                            <div class="tracking-container">
+                                <p >Tracking Number</p>
+                                <div class="tracking-num">
+                                    <p > {{ shipment.tracking_number }}</p>
+                                </div>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="infobutton">
+                        <button onclick="window.location.href='{% url 'payment' order.pk %}'">Payment details</button>
+                    </div>
+                    {% endif %}
 
             </div>
-            {% endif %}
         </div>
-    </div>
-        {% endfor %}
-    
-    
-        {% endblock content %}
 
+    </div>
+    {% endfor %}
 </div>
+
+{% endblock content %}
