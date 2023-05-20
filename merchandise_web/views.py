@@ -256,10 +256,10 @@ def updateItem(request):
 
     if action == 'add':
         orderItem.quantity = (orderItem.quantity + 1)
-        messages.success(request, f'Item was successfully added')
+        # messages.success(request, f'Item was successfully added')
         orderItem.save()
         # Render message item suces fully added
-        return JsonResponse({'success': 'Item was added'}, status=200)
+        # return JsonResponse({'success': 'Item was added'}, status=200)
 
     elif action == 'remove':
         orderItem.quantity = (orderItem.quantity - 1)
@@ -268,7 +268,7 @@ def updateItem(request):
     if orderItem.quantity <= 0:
         orderItem.delete()
 
-    return JsonResponse('Item was added', safe=False)
+    # return JsonResponse('Item was added', safe=False)
 
 def updateItem2(request):
     data = json.loads(request.body)
@@ -290,10 +290,10 @@ def updateItem2(request):
 
     if action == 'add':
         orderItem.quantity = (orderItem.quantity + 1)
-        messages.success(request, f'Item was successfully added')
+        # messages.success(request, f'Item was successfully added')
         orderItem.save()
         # Render message item suces fully added
-        return JsonResponse({'success': 'Item was added'}, status=200)
+        # return JsonResponse({'success': 'Item was added'}, status=200)
 
     elif action == 'remove':
         orderItem.quantity = (orderItem.quantity - 1)
@@ -321,6 +321,9 @@ def checkout(request):
         expeditions = Expedition.objects.all()
         user = request.user
         order, created = Order.objects.get_or_create(user=user, complete=False)
+        # change the order.time_ordered to timezone.now()
+        order.date_ordered = timezone.now()
+        order.save()
         items = order.orderitem_set.all()
         cartItems = order.get_total_items 
         payments = Payment.objects.all()
@@ -377,12 +380,14 @@ def checkout(request):
 @login_required(login_url='login')
 def purchase(request):
     user = request.user
-    orders = Order.objects.filter(user=user, orderitem__quantity__gt=0).distinct()
+    orders = Order.objects.filter(user=user, orderitem__quantity__gt=0,complete=True).order_by('-date_ordered').distinct()
     order_items = []
     for order in orders:
         order_items.append(order.orderitem_set.all())
 
-    shipments = Shipment.objects.filter(user=user, order__payment_status=True)   
+    # shipments = Shipment.objects.filter(user=user)   
+    shipments = Shipment.objects.filter(order__in=orders)
+
     categories = Categorie.objects.all()
     context = { 'orders': orders, 'order_items': order_items, 'shipments': shipments, 'categorie': categories}  
     return render(request, 'purchase.html', context)
@@ -444,14 +449,12 @@ def design(request, pk):
             # update existing user design
             user_design = orderitem.user_design
             user_design.image = design_image or user_design.image # use new image or existing image
-            user_design.text = design_text
             user_design.save()
         else:
             # create a new user design and associate it with the order item
             user_design = UserDesign.objects.create(
                 user=request.user,
                 image=design_image,
-                text=design_text,
                 price=orderitem.product.price
             )
             orderitem.user_design = user_design
@@ -461,6 +464,13 @@ def design(request, pk):
         return redirect(request.path)
     
     else:
+        # if orderitem.user_design:
+        #     user_design = orderitem.user_design
+        #     design_option = request.POST.get('design')
+        #     user_design = UserDesign.objects.get(user=request.user)
+        #     user_design.design_option = design_option
+        #     user_design.save()
+
         # if not a POST request, display the design page with the order item
         context = {'orderitem': orderitem , 'product_image': product_image} 
         return render(request, 'design.html', context)
@@ -474,6 +484,7 @@ def delete_design_image(request, pk1, pk2):
         if user_design.image: # Check if image exists before deleting it
             user_design.image.delete()
         user_design.image = None
+        user_design.design_option = None
         user_design.save()
         return redirect('design', pk=order_item.id)
 
@@ -487,3 +498,34 @@ def delete_design_text(request, pk1, pk2):
         user_design.text = None
         user_design.save()
         return redirect('design', pk=order_item.id) 
+
+
+@login_required(login_url='login')
+def save_design(request,pk):
+    # data = json.loads(request.body)
+    # orderitemId = data['orderitemId']
+    # action = data['action']
+
+    # print('action:', action)
+    # print('orderitemId:', orderitemId)
+
+    user_design = get_object_or_404(UserDesign, pk=pk, user=request.user)
+
+    # if action == 'save':
+        # save the design option
+    design_option = request.POST.get('design')
+    print(design_option)
+    user_design.design_option = design_option
+    user_design.save()
+
+        # redirect to the cart page
+    print('succes')
+    return redirect('cart')
+
+
+
+    
+    # else:
+    #     # if not a POST request, display the design page with the order item
+    #     context = {'orderitem': orderitem} 
+    #     return render(request, 'design.html', context)

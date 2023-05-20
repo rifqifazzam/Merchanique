@@ -5,57 +5,169 @@
 {% load static %}
 <link rel="stylesheet" href="{% static '/design.css' %}">
 
-<h1>Design Tools</h1>
-{% comment %} Display the orderitem.image {% endcomment %}
-{% if product_image %}
-  {% if orderitem.user_design.image %}
-    <div class="image-container">
-      <img src="{{ product_image.url }}" alt="Image" width="250" height="250">
-      <img src="{{ orderitem.user_design.image.url }}" alt="Design Image"  class="design-image">
-    </div>
-  {% else %}
-    <img src="{{ product_image.url }}" alt="Image" width="250" height="250">
-  {% endif %}
-{% endif %}
+<div class="container">
+  <h1>Design Tools</h1>
 
-{% if product_image %}
-  {% if orderitem.user_design.image %}
-    <div class="image-container">
-      <img src="{{ product_image.url }}" alt="Image" width="250" height="250">
-      <img src="{{ orderitem.user_design.image.url }}" alt="Design Image"  class="design-image design2">
-    </div>
-  {% else %}
-    <img src="{{ product_image.url }}" alt="Image" width="250" height="250">
-  {% endif %}
-{% endif %}
-
-
-{% if orderitem.user_design %}
-    <h3>Design Image</h3>
-    {% if orderitem.user_design.image %}
-        <form method="POST" action="{% url 'delete_design_image' orderitem.id orderitem.user_design.pk %}">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-danger">Delete Image</button>
-        </form>
-        <img src="{{ orderitem.user_design.image.url }}" alt="Design Image" width="50" height="50">
-    {% endif %}
-
-    <h3>Design Text</h3>
-    {% if orderitem.user_design.text %}
-    <p>{{ orderitem.user_design.text }}</p>
-    <form method="POST" action="{% url 'delete_design_text' orderitem.id orderitem.user_design.pk %}">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Delete Text</button>
-    </form>
-    {% endif %}
-{% endif %}
-
-<form method="POST" enctype="multipart/form-data">
+  <div class="design">
+    <h3>Choose your design</h3> 
+    {% if orderitem.user_design %}
+    <form id="designForm" method="POST" action="{% url 'save_design' orderitem.user_design.id  %}"> 
     {% csrf_token %}
-    <label for="design_image">Upload Design Image</label><br>
-    <input type="file" name="design_image" class="" id="design_image"><br>
-    <label for="design_text">Enter Design Text</label><br>
-    <input type="text" name="design_text" class="" id="design_text"><br>
-    <button type="submit" class="btn btn-primary">Save Design</button>
-</form>
+    <div class="design-option-container">
+        <div class="design-option{% if selected_option == 1 %} selected{% endif %}">
+          <input type="radio" id="design1" name="design" value="1"{% if orderitem.user_design.design_option == 1 %}checked{% endif %}>
+          <label for="design1">
+            {% if product_image %}
+              {% if orderitem.user_design.image %}
+                <div class="image-container">
+                  <img src="{{ product_image.url }}" alt="Image" width="250" height="250">
+                  <img src="{{ orderitem.user_design.image.url }}" alt="Design Image"  class="design-image">
+                </div>
+              {% else %}
+                <img src="{{ product_image.url }}" alt="Image" width="250" height="250">
+              {% endif %}
+            {% endif %}
+          </label>
+        </div>
+  
+        <div class="design-option">
+          <input type="radio" id="design2" name="design" value="2" {% if orderitem.user_design.design_option == 2 %}checked{% endif %}>
+          <label for="design2">
+            {% if product_image %}
+              {% if orderitem.user_design.image %}
+                <div class="image-container">
+                  <img src="{{ product_image.url }}" alt="Image" width="250" height="250">
+                  <img src="{{ orderitem.user_design.image.url }}" alt="Design Image"  class="design-image design2">
+                </div>
+              {% else %}
+                <div class="image-container">
+                  <img src="{{ product_image.url }}" alt="Image" width="250" height="250">
+                </div>
+              {% endif %}
+            {% endif %}
+          </label>
+        </div>
+  
+        <div class="design-option">
+          <input type="radio" id="design3" name="design" value="3" {% if orderitem.user_design.design_option == 3 %}checked{% endif %}>
+          <label for="design3">
+            {% if product_image %}
+              {% if orderitem.user_design.image %}
+                <div class="image-container">
+                  <img src="{{ product_image.url }}" alt="Image" width="250" height="250">
+                  <img src="{{ orderitem.user_design.image.url }}" alt="Design Image"  class="design-image design2">
+                </div>
+              {% else %}
+                <div class="image-container">
+                  <img src="{{ product_image.url }}" alt="Image" width="250" height="250">
+                </div>
+              {% endif %}
+            {% endif %}
+          </label>
+        </div>
+  
+    </div>
+    <button type="submit">Save</button>
+    </form>
+    {% else %}
+      <div class="design-option-container">
+        
+        <div class="design-option{% if selected_option == 1 %} selected{% endif %}">
+          <input type="radio" id="design1" name="design" value="1"{% if orderitem.user_design.design_option == 1 %}checked{% endif %}>
+          <label for="design1">
+            {% if product_image %}
+              {% if orderitem.user_design.image %}
+                <div class="image-container">
+                  <img src="{{ product_image.url }}" alt="Image" width="250" height="250">
+                  <img src="{{ orderitem.user_design.image.url }}" alt="Design Image"  class="design-image">
+                </div>
+              {% else %}
+                <img src="{{ product_image.url }}" alt="Image" width="250" height="250">
+              {% endif %}
+            {% endif %}
+          </label>
+        </div>
+
+        <div class="design-option">
+          <input type="radio" id="design2" name="design" value="2" {% if orderitem.user_design.design_option == 2 %}checked{% endif %}>
+          <label for="design2">
+            {% if product_image %}
+              {% if orderitem.user_design.image %}
+                <div class="image-container">
+                  <img src="{{ product_image.url }}" alt="Image" width="250" height="250">
+                  <img src="{{ orderitem.user_design.image.url }}" alt="Design Image"  class="design-image design2">
+                </div>
+              {% else %}
+                <div class="image-container">
+                  <img src="{{ product_image.url }}" alt="Image" width="250" height="250">
+                </div>
+              {% endif %}
+            {% endif %}
+          </label>
+        </div>
+
+        <div class="design-option">
+          <input type="radio" id="design3" name="design" value="3" {% if orderitem.user_design.design_option == 3 %}checked{% endif %}>
+          <label for="design3">
+            {% if product_image %}
+              {% if orderitem.user_design.image %}
+                <div class="image-container">
+                  <img src="{{ product_image.url }}" alt="Image" width="250" height="250">
+                  <img src="{{ orderitem.user_design.image.url }}" alt="Design Image"  class="design-image design2">
+                </div>
+              {% else %}
+                <div class="image-container">
+                  <img src="{{ product_image.url }}" alt="Image" width="250" height="250">
+                </div>
+              {% endif %}
+            {% endif %}
+          </label>
+        </div>
+
+      </div>
+    {% endif %}
+  </div>
+  
+
+
+  {% if orderitem.product.designable %}
+    <h3>Design Image</h3>
+    <div class="design-updel-container">
+
+      <div class="design-image-box">
+        {% if orderitem.user_design.image %}
+          <img src="{{ orderitem.user_design.image.url }}" alt="Design Image" width="50" height="50">
+        {% endif %}
+      </div>
+
+      <div class="desain-main-form-container">
+      <form method="POST" enctype="multipart/form-data" class="upload-form">
+        {% csrf_token %}
+        <label for="design_image">Upload Design</label><br>
+        <input type="file" name="design_image" class="form-browse" id="design_image"><br>
+        {% comment %} Make thi if not {% endcomment %}
+        {% if orderitem.user_design.image %}
+        {% else %}
+        <button type="submit" class="btn btn-upload">Upload Design</button>
+        {% endif %}
+      </form>
+
+      {% if orderitem.user_design.image %}
+          <form method="POST" action="{% url 'delete_design_image' orderitem.id orderitem.user_design.pk %}"  enctype="multipart/form-data">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger">Delete Design</button>
+          </form>
+      {% endif %}
+      </div>
+      
+    </div>
+  {% else %}
+    <h3>Design Image</h3>
+    <h1>This Product is not designable</h1>
+  {% endif %}
+
+
+
+  
+</div>
 {% endblock content %}
