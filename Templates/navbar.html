@@ -48,14 +48,7 @@
               <li><a href="{% url 'logout' %}">Keluar</a></li>
             </ul>
         </li>
-        {% endif %}
-
-        {% comment %} {% if request.user.is_authenticated %}
-        <li><a href="{% url 'logout' %}">Keluar</a></li>
-        <li class="userr"><a href="{% url 'profil' %}">{{ user }} </a></li>
-        <li><a href="{% url 'purchase' %}">Pembelian</a></li>
-        {% endif %} {% endcomment %}
-       
+        {% endif %}       
     </ul>
     
 </nav>
