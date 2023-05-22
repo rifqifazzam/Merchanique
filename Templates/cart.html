@@ -11,87 +11,83 @@
     
     <h1>My Cart</h1>
 
-<div class="containerfix">
+    <div class="containerfix">
 
         <div class="container2"> 
 
-
-            
-            
-            
-                {% for item in items %}
-                <div class="container3">
-            
-               
+            {% for item in items %}
+            <div class="container3">
                 
-
                 <div class="gambarharga">
-                <div class="cart-item">
-                    <img class="cart-item-image" src="" width="100" height="100">
-                </div>
-
-                <div  class="box">
-                    <div class="subbox">
-                    <div class="namecustom">
-                    <p class="cart-item-title">{{item.product.name}}</p>
-                    {% if item.product.designable %}
                     
-                    <div class="desainimut">
-                        <input type="submit" class="imutbutton" onclick="window.location.href='{% url 'design' item.id %}'" value="Customize design">
-                    </div>
+                    <div class="cart-item">
+                        <img class="cart-item-image" src="" width="100" height="100">
                     </div>
 
-                    <div class="subbox2">
+                    <div  class="box">
+                        
+                        <div class="subbox">
+                        
+                            <div class="namecustom">
+                                <p class="cart-item-title">{{item.product.name}}</p>
+                                {% if item.product.designable %}
+                        
+                                <div class="desainimut">
+                                    <input type="submit" class="imutbutton" onclick="window.location.href='{% url 'design' item.id %}'" value="Customize design">
+                                </div>
+                                {% endif %}
+                            </div>
 
-                        <div class="size">
-                            <p>Size :</p>
-                            <p>{{item.size}}</p>
+                            <div class="namacustom2">
+                                <div class="subbox2">
+
+                                    <div class="size">
+                                        <p>Size :</p>
+                                        <p>{{item.size}}</p>
+                                </div>
+                    
+                                <div class="plusminus">
+                                    <p> Qnt</p>
+                                    <div class="buttontambah">
+                                        <img data-product="{{item.id}}" data-action="add" class="chg-quantity update-cart2" src="" alt="+" >
+                                        <p class="quantity">{{item.quantity}}</p>
+                                        <img data-product="{{item.id}}" data-action="remove" class="chg-quantity update-cart2" src="" alt="-" >	
+                                    </div>
+                                </div>
+                            
+                            </div>
+                            
                         </div>
-            
-                        <div class="plusminus">
-                        <p> Qnt</p>
-                        <div class="buttontambah">
-                                <img data-product="{{item.id}}" data-action="add" class="chg-quantity update-cart2" src="" alt="+" >
-                                <p class="quantity">{{item.quantity}}</p>
-                                <img data-product="{{item.id}}" data-action="remove" class="chg-quantity update-cart2" src="" alt="-" >	
-                        </div>
-                    </div>
 
+                        
+                        
                     </div>
-
-                    
-                    {% endif %}
-                    
-                    
-                    
-                    </div>
-
                     
                 </div>
                 
             </div>
-
             
 
-                <div class="totalprice">
-                    <p>Rp{{item.get_total}}</p>
-                </div>
-
+                
+            <div class="totalprice">
+                <p>Rp{{item.get_total}}</p>
             </div>
-                {% endfor %}
+
         </div>
+        {% endfor %}
+            
+    </div>
 
         <div class="container4">
             <p><span>Total</span><span>{{order.get_cart_total}}<span></p>
-                
-                <input type="submit" class="btn-success" onclick="window.location.href='{% url 'checkout' %}'" value="Checkout">
-
-
+            <input type="submit" class="btn-success" onclick="window.location.href='{% url 'checkout' %}'" value="Checkout">
         </div>
 
+    </div>
+
 </div>
 
 
-</div>
+
 
 {% endblock content %}
