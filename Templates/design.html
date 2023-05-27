@@ -21,7 +21,7 @@
               {% if orderitem.user_design.image %}
                 <div class="image-container">
                   <img src="{{ product_image.url }}" alt="Image" width="250" height="250">
-                  <img src="{{ orderitem.user_design.image.url }}" alt="Design Image"  class="design-image">
+                  <img src="{{ orderitem.user_design.image.url }}" alt="Design Image"  class="design-image design1">
                 </div>
               {% else %}
                 <img src="{{ product_image.url }}" alt="Image" width="250" height="250">
@@ -55,7 +55,7 @@
               {% if orderitem.user_design.image %}
                 <div class="image-container">
                   <img src="{{ product_image.url }}" alt="Image" width="250" height="250">
-                  <img src="{{ orderitem.user_design.image.url }}" alt="Design Image"  class="design-image design2">
+                  <img src="{{ orderitem.user_design.image.url }}" alt="Design Image"  class="design-image" id="test">
                 </div>
               {% else %}
                 <div class="image-container">
@@ -65,21 +65,25 @@
             {% endif %}
           </label>
         </div>
-  
     </div>
-    <button type="submit">Save</button>
+
+    {% if orderitem.user_design.image %}
+      <button type="submit" class="save-design-option">Save Option</button>
+    {% endif %}
+
     </form>
+
     {% else %}
       <div class="design-option-container">
         
-        <div class="design-option{% if selected_option == 1 %} selected{% endif %}">
+    <div class="design-option">
           <input type="radio" id="design1" name="design" value="1"{% if orderitem.user_design.design_option == 1 %}checked{% endif %}>
           <label for="design1">
             {% if product_image %}
               {% if orderitem.user_design.image %}
                 <div class="image-container">
                   <img src="{{ product_image.url }}" alt="Image" width="250" height="250">
-                  <img src="{{ orderitem.user_design.image.url }}" alt="Design Image"  class="design-image">
+                  <img src="{{ orderitem.user_design.image.url }}" alt="Design Image"  class="design-image design1">
                 </div>
               {% else %}
                 <img src="{{ product_image.url }}" alt="Image" width="250" height="250">
@@ -104,8 +108,7 @@
               {% endif %}
             {% endif %}
           </label>
-        </div>
-
+        </div> 
         <div class="design-option">
           <input type="radio" id="design3" name="design" value="3" {% if orderitem.user_design.design_option == 3 %}checked{% endif %}>
           <label for="design3">
@@ -113,7 +116,7 @@
               {% if orderitem.user_design.image %}
                 <div class="image-container">
                   <img src="{{ product_image.url }}" alt="Image" width="250" height="250">
-                  <img src="{{ orderitem.user_design.image.url }}" alt="Design Image"  class="design-image design2">
+                  <img src="{{ orderitem.user_design.image.url }}" alt="Design Image"  class="test" id="design33">
                 </div>
               {% else %}
                 <div class="image-container">
@@ -122,8 +125,8 @@
               {% endif %}
             {% endif %}
           </label>
-        </div>
-
+        </div> 
+        <h1>ANJINGG</h1>
       </div>
     {% endif %}
   </div>
@@ -161,12 +164,11 @@
       </div>
       
     </div>
+    
   {% else %}
     <h3>Design Image</h3>
     <h1>This Product is not designable</h1>
   {% endif %}
-
-
 
   
 </div>

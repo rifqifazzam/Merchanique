@@ -146,6 +146,13 @@ def profile(request):
 
 def product_detail(request, product_id):
     product = Product.objects.get(id=product_id)
+    # get theproduct by the product categorie of this product
+    category = product.category
+    related_products = list(Product.objects.filter(category=category))
+    random.shuffle(related_products)
+    related_products = related_products[:4]
+
+
     if request.method == 'GET':
         # Showing the total cart items in navbar
         if request.user.is_authenticated:
@@ -168,6 +175,7 @@ def product_detail(request, product_id):
             'product_images': product_images,
             'categorie': categories,
             'product_variants': product_variants,
+            'related_products': related_products
         }
         return render(request, 'product_detail.html', context)
     elif request.method == 'POST':
@@ -379,6 +387,7 @@ def checkout(request):
 
 @login_required(login_url='login')
 def purchase(request):
+    
     user = request.user
     orders = Order.objects.filter(user=user, orderitem__quantity__gt=0,complete=True).order_by('-date_ordered').distinct()
     order_items = []
