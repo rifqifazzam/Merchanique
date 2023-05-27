@@ -4,19 +4,24 @@
 {% load static %}
 <link rel="stylesheet" href="{% static '/homepage.css' %}">
 
-{% include 'navbar.html' %}
+
 
 <div class="containerfix">
   <div class="container" href="">
     <section>
       <div class="header">
         <div class="header-container">
-          <div class="header-container-text">
-            <h1>MAKE YOUR OWN </br> SHIRT DESIGN</h1>
+          <div class="image">
+            <img src="{% static 'img/pexels-antoni-shkraba-7081097 1.svg' %}" alt="">
           </div>
-          <div class="header-container-img">
-            <img src="{% static 'img/design-view.svg' %}" alt="">
+          
+          <div class="header-container-text">
+            {% include 'navbar.html' %}
+            <h1>Express Your Creativity</h1>
+            <h2>Design Your Own T-Shirt</h2>
+          </div>
         </div>
+          
       </div>
     </section>
 

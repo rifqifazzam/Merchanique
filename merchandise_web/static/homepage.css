@@ -3,24 +3,46 @@
 }
 
 .container{
-    padding-top:20px ;
+    
     padding-bottom: 50px;
    
+}
+
+.header{
+    background: linear-gradient(89.98deg, #A620E5 2.26%, rgba(246, 66, 229, 0.9375) 52.95%, rgba(245, 113, 232, 0.89) 99.97%);
+    height: 500px;
+    
+}
+
+.image{
+    height: 0px;
+    position: relative;
+    top:30px;
+    left: 480px;
+    z-index: 1;
+}
+
+.image img{
+    height: 470px;
+    width: auto;
 }
 
 
 .header-container{
     display: flex;
+    flex-direction: column;
     /* width: 95%; */
-    background-color: #DFBFDC;
+    
     /* height: 294.97px; */
     margin: 0 auto;
+    
 }
 
 .header-container-text{
     display: flex;
     width: 100%     ;
     flex-direction:column ;
+    z-index: 2;
 }
 
 .header-container-img {
@@ -45,20 +67,32 @@
 
 }
 
-.header-container h1{
+.header-container h1,.header-container h2 {
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 700;
-    font-size: 64px;
     line-height: 96px;
+    text-align: center;
 
-    color: #54007B;
+    color: #FAEEFF;
 
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
-    margin-left: 3.5%;
+    
     font-family: 'Inter';
     font-style: normal;
+}
+
+.header-container h1{
+    font-size: 64px;
+    margin-bottom: 0px;
+
+}
+
+.header-container h2{
+    font-size: 45px;
+    margin-top: 0px;
+    padding-top: 0px;
 }
 
 .category-title{
@@ -323,6 +357,7 @@ margin-left: 5px;
 .sosmed .facebook{
     margin-top: 8px;
     margin-right: 8px;
+    margin-left: -2px;
 }
 
 .sosmed .instagram{
