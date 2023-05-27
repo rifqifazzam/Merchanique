@@ -1,112 +1,151 @@
-
-{% extends 'base.html'%}
-{% block title %}Profil{% endblock title %}
-{% block content %}
+{% extends 'base.html'%} 
+{% block title %}Profil{% endblock title %} 
+{% block content %} 
 {% load static %}
-<link rel="stylesheet" href="{% static '/productdetail.css' %}">
+<link rel="stylesheet" href="{% static '/productdetail.css' %}" />
 
 {% include 'navbar.html' %}
 
+
 <div class="container">
-    <div>
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} success-message">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
-    </div>  
-    <div class="product">
-      <div class="Product-Image-Wrapper">
-          <div class="Main-Image-Container">
-            <img id="Main-Image" src="{{ product_images.first.image.url }}" alt="{{ product_images.first.description }}" width="200" height="200" class="mainImage"><br>
-          </div>
-          <div class="Image-Row-Container">
-            {% for image in product_images %}
-            <div class="Image-Col {% if forloop.first %}active{% endif %}" onclick="updateMainImage('{{ image.image.url }}', this)">
-              <img src="{{ image.image.url }}" alt="{{ image.description }}" class="thumbnail" width="50" height="50">
-            </div>
-          {% endfor %}
-          
+  <div>
+    {% if messages %} {% for message in messages %}
+    <script>
+      alert("{{ message }}");
+    </script>
+    {% endfor %} {% endif %}
+  </div>
+
+  <div class="product">
+    <div class="Product-Image-Wrapper">
+      <div class="Main-Image-Container">
+        <img
+          id="Main-Image"
+          src="{{ product_images.first.image.url }}"
+          alt="{{ product_images.first.description }}"
+          width="200"
+          height="200"
+          class="mainImage"
+        /><br />
+      </div>
+      <div class="Image-Row-Container">
+        {% for image in product_images %}
+        <div
+          class="Image-Col {% if forloop.first %}active{% endif %}"
+          onclick="updateMainImage('{{ image.image.url }}', this)"
+        >
+          <img
+            src="{{ image.image.url }}"
+            alt="{{ image.description }}"
+            class="thumbnail"
+            width="50"
+            height="50"
+          />
+        </div>
+        {% endfor %}
       </div>
     </div>
-        
+
     <div class="Product-Info-Wrapper">
-      
       <div class="productinfoatas">
-          <h1>{{product.name}} </h1>
-          <p>Category: {{product.category}}</p>
-          <h2>Rp {{product.price}},00 </h2>
-          <h3>{{product.description}} </h3>  
+        <h1>{{product.name}}</h1>
+        <p>Category: {{product.category}}</p>
+        <h2>Rp {{product.price}},00</h2>
+        <h3>{{product.description}}</h3>
       </div>
 
-          
       <div class="productinfobawah">
-        
-        
-        <div class="selectoption">
-          {% if product.variantble %}
-          {% endif %}
-          <form id="add-to-cart-form" method="post">
-              {% csrf_token %}
-          
-             {% if product.variantble %}
-                <select name="size" required>
-                    <option value="">Select a size</option>
-                    {% for variant in product.variants.all %}
-                        <option value="{{ variant.id }}">{{ variant.size }}</option>
-                    {% endfor %}
-                </select>
-        </div>
+        <form id="add-to-cart-form" class="forrmm" method="post">
+          <div class="selectoption">
+            {% csrf_token %} {% if product.variantble %}
+            <select name="size" required>
+              <option value="">Select a size</option>
+              {% for variant in product.variants.all %}
+              <option value="{{ variant.id }}">{{ variant.size }}</option>
+              {% endfor %}
+            </select>
             {% endif %}
-       
+          </div>
 
-              <br>
-        <div class="infoquantity">
-              <label for="quantity">Quantity</label>
-              <input type="number" id="quantity" name="quantity" value="1" min="1">
-              <br><br>
-        </div>
-              
-        <div class="buttonsubmit">
-              <button type="submit" class="btn btn-primary">Add to Cart</button>
-        </div>
-          
-              </form>
+          <div class="infoquantity">
+            <label for="quantity">Quantity</label>
+            <input type="number" id="quantity" name="quantity" value="1" min="1"/>
+          </div>
+
+          <div class="buttonsubmit">
+            {% if user.is_authenticated %}
+            <button type="submit" class="btn btn-primary">Add to Cart</button>
+            {% else %}
+            <button type="" class="btn btn-primary" onclick="handleAddToCart()">
+              Add to Cart
+            </button>
+            {% endif %}
+          </div>
+        </form>
       </div>
+    </div>
+  </div>
+
+
+  <section>
+    <div class="products">
+      <h2>Recomended Products</h2>
+      <div class="products-container">
+        <div class="product-wrapper">
+          {% for p in related_products %}
+          <a href="{% url 'product_detail' p.id %}">
+            <div class="product-rec">
+              <img src="{{ p.image.url }}" alt="" class="product_img">
+              <div class="product-info">
+                <h3 class="product-name">{{ p.name }}</h3>
+                <p class="product-price">Rp. {{ p.price }}</p>
+              </div>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+  
+
 </div>
 
 <script>
-  const mainImage = document.getElementById('Main-Image');
+  const mainImage = document.getElementById("Main-Image");
   function updateMainImage(url) {
     mainImage.src = url;
   }
 </script>
 
 <script>
-    setTimeout(function(){
-        if (document.querySelector('.success-message')) {
-            location.reload();
-        }
-    }, 1000);
+  setTimeout(function () {
+    if (document.querySelector(".success-message")) {
+      location.reload();
+    }
+  }, 1000);
 </script>
 
-
 <script>
-// ...
+  // ...
 
-function updateMainImage(url, el) {
-  mainImage.src = url;
+  function updateMainImage(url, el) {
+    mainImage.src = url;
 
-  // Remove 'active' class from all thumbnail images
-  document.querySelectorAll('.thumbnail').forEach(thumb => {
-    thumb.parentNode.classList.remove('active');
-  });
+    // Remove 'active' class from all thumbnail images
+    document.querySelectorAll(".thumbnail").forEach((thumb) => {
+      thumb.parentNode.classList.remove("active");
+    });
 
-  // Add 'active' class to the clicked thumbnail image
-  el.classList.add('active');
-}
+    // Add 'active' class to the clicked thumbnail image
+    el.classList.add("active");
+  }
 
-// ...
+  function handleAddToCart() {
+    alert("Please log in to add items to your cart.");
+    location.href = "/login/";
+  }
 
+  // ...
 </script>
 {% endblock content %}
