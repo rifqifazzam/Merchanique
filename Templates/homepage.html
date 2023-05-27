@@ -6,58 +6,147 @@
 
 {% include 'navbar.html' %}
 
-<div class="container" href="">
-  <section>
-    <div class="header">
-      <div class="header-container">
-        <div class="header-container-text">
-          <h1>MAKE YOUR OWN </br> SHIRT DESIGN</h1>
+<div class="containerfix">
+  <div class="container" href="">
+    <section>
+      <div class="header">
+        <div class="header-container">
+          <div class="header-container-text">
+            <h1>MAKE YOUR OWN </br> SHIRT DESIGN</h1>
+          </div>
+          <div class="header-container-img">
+            <img src="{% static 'img/design-view.svg' %}" alt="">
         </div>
-        <div class="header-container-img">
-          <img src="{% static 'img/design-view.svg' %}" alt="">
       </div>
-    </div>
-  </section>
+    </section>
+
+    <section>
+      <h2 class="category-title">Kategori Pilihan</h2>
+      <div class="categories">
+            {% for c in categorie %}
+            <div class="categorie">
+                <a href="{% url 'category' c.pk %}">
+                  <img src="{{c.image.url}}" alt="" class="categorie_img">
+                </a>
+                <a href="{% url 'category' c.pk %}" class="categorie_name" > {{c.name}}</a>
+            </div>
+            {% endfor %}
+      </div> 
+    </section>
+
+    <section>
+      <div class="">
+      </div>
+    </section>
+
+    <section>
+      <div class="products">
+        <h2>Our Products</h2>
+        <div class="products-container">
+            <div class="product-wrapper">
+              {% for p in product|slice:":15" %}
+              <a href="{% url 'product_detail' p.id %}">
+                <div class="product">
+                  <img src="{{p.image.url}}" alt="" class="product_img">  
+                  <div class="product-info">
+                    <h3 class="product-name">{{p.name}}</h3>
+                    <p class="product-price">Rp. {{p.price}}</p>
+                  </div>     
+                </div>
+              </a>
+              {% endfor %}
+            </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
 
   <section>
-    <h2 class="category-title">Kategori Pilihan</h2>
-    <div class="categories">
+    <div class="footer">
+      <div class="kotak1">
+        <h6> Merchanique </h6>
+        <p> Discover unique and innovative merchandise. Embrace your style with Merchanique's curated collection. Shop now and experience exceptional quality and customer satisfaction. Join our vibrant community of art and fashion enthusiasts. </p>
+      </div>
+
+      <div class="kotak2">
+        <p>Categories</p>
+        <div class="listcategories">
           {% for c in categorie %}
-          <div class="categorie">
+          <div class="listcategories2">
               <a href="{% url 'category' c.pk %}">
-                <img src="{{c.image.url}}" alt="" class="categorie_img">
               </a>
-              <a href="{% url 'category' c.pk %}" class="categorie_name" > {{c.name}}</a>
+              <a href="{% url 'category' c.pk %}" class="namelist" > {{c.name}}</a>
           </div>
           {% endfor %}
-    </div> 
-  </section>
-
-  <section>
-    <div class="">
-    </div>
-  </section>
-
-  <section>
-    <div class="products">
-      <h2>Our Products</h2>
-      <div class="products-container">
-          <div class="product-wrapper">
-            {% for p in product %}
-            <a href="{% url 'product_detail' p.id %}">
-              <div class="product">
-                <img src="{{p.image.url}}" alt="" class="product_img">  
-                <div class="product-info">
-                  <h3 class="product-name">{{p.name}}</h3>
-                  <p class="product-price">Rp. {{p.price}}</p>
-                </div>     
-              </div>
-            </a>
-            {% endfor %}
-          </div>
+        </div>
+      
       </div>
+
+      <div class ="kotak3">
+        <p>Best Seller</p>
+        <div class="bestseller">
+          <a class="namelist" href="">Marvel Canteen
+          </a>
+          <a class="namelist" href="">Disney Canteen
+          </a>
+          <a class="namelist" href="">Basic T-Shirt
+          </a>
+          <a class="namelist" href="">Matrix Sport
+          </a>
+        </div>
+      
+      </div>
+
+      <div class="kotak4">
+        <div class="judul">
+        <p >Contact Us</p>
+        </div>
+        <a>Jalan Raya Dramaga, Babakan, Dramaga Subdistrict, Bogor Regency, West Java 16680</a>
+        <div class="contact">
+          <div class="fax">
+            <img src="{% static 'img/material-symbols_fax-outline.svg' %}" alt="">
+            <p>212-693-2777</p>
+          </div>
+          <div class="telp">
+            <img src="{% static 'img/ic_baseline-phone.svg' %}" alt="">
+            <p>(025) 18622642</p>
+          
+          </div>
+          <div class="email">
+            <img src="{% static 'img/ic_outline-email.svg' %}" alt="">
+            <p>ask@merchanique.com</p>
+          
+          </div>
+        
+        </div>
+        <div class="sosmed">
+          <a href="https://www.facebook.com">
+            <img src="{% static 'img/ic_baseline-facebook.svg' %}" alt="Facebook" class="facebook">
+          </a>
+        
+          <a href="https://www.instagram.com/fathaarya">
+            <img src="{% static 'img/mdi_instagram.svg' %}" alt="Instagram" class="instagram">
+          </a>
+        
+          <a href="https://www.instagram.com/fathaarya">
+            <img src="{% static 'img/ri_whatsapp-fill.svg' %}" alt="WhatsApp" class="whatsApp">
+          </a>
+        
+          <a href="https://www.instagram.com/fathaarya">
+            <img src="{% static 'img/mdi_twitter.svg' %}" alt="Line" class="line">
+          </a>
+        
+          <a href="https://www.instagram.com/fathaarya">
+            <img src="{% static 'img/mdi_twitternew.svg' %}" alt="Twitter" class="twitter">
+          </a>
+        </div>
+        
+
+
+      </div>
+      
     </div>
   </section>
-
 </div>
 {% endblock content%}

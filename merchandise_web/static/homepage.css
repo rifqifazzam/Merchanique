@@ -5,6 +5,7 @@
 .container{
     padding-top:20px ;
     padding-bottom: 50px;
+   
 }
 
 
@@ -127,8 +128,11 @@
     width: 100%;
     height: 268.51px;
     background-color: #F6F6F6;
-    border-radius:12px 
+    border-radius:12px;
+    
 }
+
+
 
 .product_img{
     width: 100%;
@@ -178,9 +182,169 @@
 
 .products{
     margin-bottom:10% ;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .product-wrapper a {
     color: blue;
     text-decoration: none;
   }
+
+.containerfix{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.footer{
+    margin-top: 200px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background: #A620E5;
+    height: 300px;
+    
+}
+
+.kotak3,.bestseller{
+    display: flex;
+    flex-direction: column;
+}
+
+.kotak1 {
+    width:350px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+
+}
+
+h6{
+font-family: 'Iceberg';
+
+font-weight: 400;
+font-size: 40px;
+line-height: 49px;
+
+color: #FFFFFF; 
+margin-top: 20px;
+margin-bottom: 0px;
+}
+
+.kotak1 p{
+    
+    font-style: normal;
+    font-weight: 100;
+    font-size: 17px;
+    line-height: 20px;
+    color: white;
+}
+
+.kotak2{
+
+}
+
+.kotak2 p, .kotak3 p,.judul p{
+    font-style: normal;
+font-weight: 700;
+font-size: 25px;
+line-height: 32px;
+
+color: #FFFFFF;
+padding-top: 5px;
+margin-bottom: 10px;
+}
+
+
+
+.kotak4 a{
+    color: white;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 20px;
+
+}
+
+.fax p,.telp p,.email p{
+    font-weight: 500;
+font-size: 15px;
+line-height: 20px;
+color: #FFFFFF;
+margin-top: 5px;
+margin-bottom: 0px;
+margin-left: 5px;
+}
+
+.fax,.telp,.email{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-top: 5px;
+}
+
+
+
+
+
+
+.namelist {
+    color: white;
+    
+  }
+.listcategories2{
+    margin-bottom: 5px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13.5px;
+    line-height: 20px;
+}
+
+.kotak3{
+
+}
+
+.namelist{
+    margin-bottom: 5px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13.5px;
+    line-height: 20px;
+}
+
+.kotak4{
+    width: 300px;
+
+}
+
+
+
+.sosmed .facebook{
+    margin-top: 8px;
+    margin-right: 8px;
+}
+
+.sosmed .instagram{
+    margin-bottom: 3px;
+    margin-right: 8px;
+}
+
+.sosmed .whatsApp{
+    
+    margin-right: 8px;
+}
+
+.sosmed .line{
+    margin-left: -2px;
+    margin-right: 6px;
+    width: 45px;
+    height: auto; 
+}
+
+.sosmed .twitter{
+    width: 45px; 
+  height: auto;
+}
+
+
