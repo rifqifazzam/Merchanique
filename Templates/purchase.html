@@ -22,13 +22,37 @@
                     <div class="subcart">
                         <div class="image">
                             {% if item.product.image%}
-                            <img class="cart-item-image" src="{{item.product.image.url}}" width="65" height="65">
+                            {% if item.user_design %}
+                            {% if item.user_design.design_option == 1%}
+                            <div class="image-container">
+                                <img class="cart-item-image" src="{{item.product.image.url}}" width="65" height="65">
+                            <img src="{{ item.user_design.image.url }}" alt="Design Image"  class="design-image design1">
+                            </div>
+                            {% elif item.user_design.design_option == 2%}
+                            <div class="image-container">
+                                <img class="cart-item-image" src="{{item.product.image.url}}" width="65" height="65">
+                                <img src="{{ item.user_design.image.url }}" alt="Design Image"  class="design-image design2">
+                            </div>
+                            {% elif item.user_design.design_option == 3%}
+                            <div class="image-container">
+                                <img class="cart-item-image" src="{{item.product.image.url}}" width="65" height="65">
+                                <img src="{{ item.user_design.image.url }}" alt="Design Image"  id="test" class="design-image design3">
+                            </div>
                             {% else %}
-                            <img class="cart-item-image" src="" width="65" height="65">
+                                <img class="cart-item-image" src="{{ item.product.image.url }}" width="65" height="65">
+                            {% endif %}
+                        {% else %}
+                            <img class="cart-item-image" src="{{item.product.image.url}}" width="65" height="65">
+                        {% endif %}
+                            {% else %}
+                                <img class="cart-item-image" src="" width="65" height="65">
                             {% endif %}
                         </div>
                         <div class="itemtittle">
                             <span class="cart-item-title">{{item.product.name}}</span>
+                            {% if item.user_design.image %}
+                            <span class="customized"> (Customized)</span>
+                            {% endif %}
                             <p class="quantity">Qty: {{item.quantity}}</p>
                             <p class="size">Size: {{item.size}}</p>
                         </div>

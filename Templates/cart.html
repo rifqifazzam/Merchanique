@@ -21,7 +21,28 @@
                 <div class="gambarharga">
                     
                     <div class="cart-item">
-                        <img class="cart-item-image" src="{{item.product.image.url}}" width="100" height="100">
+                        {% if item.user_design %}
+                            {% if item.user_design.design_option == 1%}
+                            <div class="image-container">
+                                <img class="cart-item-image" src="{{item.product.image.url}}" width="100" height="100">
+                            <img src="{{ item.user_design.image.url }}" alt="Design Image"  class="design-image design1">
+                            </div>
+                            {% elif item.user_design.design_option == 2%}
+                            <div class="image-container">
+                                <img class="cart-item-image" src="{{item.product.image.url}}" width="100" height="100">
+                                <img src="{{ item.user_design.image.url }}" alt="Design Image"  class="design-image design2">
+                            </div>
+                            {% elif item.user_design.design_option == 3%}
+                            <div class="image-container">
+                                <img class="cart-item-image" src="{{item.product.image.url}}" width="100" height="100">
+                                <img src="{{ item.user_design.image.url }}" alt="Design Image"  id="test" class="design-image design3">
+                            </div>
+                            {% else %}
+                                <img class="cart-item-image" src="{{ item.product.image.url }}" width="100" height="100">
+                            {% endif %}
+                        {% else %}
+                            <img class="cart-item-image" src="{{item.product.image.url}}" width="100" height="100">
+                        {% endif %}
                     </div>
 
                     <div  class="box">
