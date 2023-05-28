@@ -192,3 +192,40 @@ background-color: #F47C7C;
 .itemtittle{
     margin-left: 10px;
 }
+
+.image-container {
+    position: relative;
+    display: inline-block;
+}
+  
+.design-image {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    opacity: 0.5;
+}
+
+.design1{
+    top: 35%;
+    left: 35%;
+    width:15px; 
+    height: 20px;
+}
+
+.design2{
+    top: 52%;
+    left: 50%;
+    width:30px; 
+    height:40px;
+}
+
+.design3{
+    top: 35%;
+    left: 50%;
+    width:40px;
+    height:25px;
+}
+
+
+.customized{
+    color: #4CEB6F;
+}

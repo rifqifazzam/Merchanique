@@ -10,8 +10,6 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-
-    
 }
 
 .container{
@@ -29,9 +27,9 @@
     width: 700px;
 
     background: #FFFEFE;
-border: 1px solid #CDCDCD;
-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-border-radius: 12px;
+    border: 1px solid #CDCDCD;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
    
 }
 
@@ -41,8 +39,7 @@ border-radius: 12px;
     align-items: center;
     justify-content: space-between;
     padding-top:0px;
-    margin-right: 0;
-    
+    margin-right: 0;   
 }
 
 .gambarharga{
@@ -55,7 +52,6 @@ border-radius: 12px;
 .totalprice{
     margin-top: auto;
     margin-right: 2%;
-    
 }
 
 .totalprice p{
@@ -214,12 +210,36 @@ margin-right:20px;
 }
   
   
-
-
-
+.image-container {
+    position: relative;
+    display: inline-block;
+}
   
+.design-image {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    opacity: 0.5;
+}
 
-  
+.design1{
+    top: 35%;
+    left: 35%;
+    width:15px; 
+    height: 20px;
+}
 
+.design2{
+    top: 52%;
+    left: 50%;
+    width:30px; 
+    height:40px;
+}
+
+.design3{
+    top: 35%;
+    left: 50%;
+    width:40px;
+    height:25px;
+}
 
 

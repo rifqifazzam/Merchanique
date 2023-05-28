@@ -52,6 +52,11 @@
         <p>Category: {{product.category}}</p>
         <h2>Rp {{product.price}},00</h2>
         <h3>{{product.description}}</h3>
+
+        {% if product.designable %}
+        <p class="designable-info"> This product is designable </P>
+        {% endif %}
+
       </div>
 
       <div class="productinfobawah">
@@ -76,9 +81,7 @@
             {% if user.is_authenticated %}
             <button type="submit" class="btn btn-primary">Add to Cart</button>
             {% else %}
-            <button type="" class="btn btn-primary" onclick="handleAddToCart()">
-              Add to Cart
-            </button>
+            <button type="" class="btn btn-primary" onclick="handleAddToCart()">Add to Cart</button>
             {% endif %}
           </div>
         </form>

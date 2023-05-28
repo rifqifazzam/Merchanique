@@ -246,3 +246,9 @@
     padding: 10px;
     border-radius:12px 12px 0px 0px ;
 }
+
+
+.designable-info{
+    color: #1f1127;
+    font-weight: bold;
+}

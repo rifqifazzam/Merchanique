@@ -39,10 +39,15 @@ class ProductVariant(models.Model):
         ('S', 'Small'),
         ('M', 'Medium'),
         ('L', 'Large'),
+        ('9oz', 'Small size with a capacity of 9 ounces'),
+        ('16oz', 'Medium size with a capacity of 16 ounces'),
+        ('25oz', 'Medium size with a capacity of 25 ounces'),
+        ('32oz', 'Medium size with a capacity of 32 ounces'),
+        ('60oz', 'Large size with a capacity of 60 ounces'),
     ]
 
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='variants', null=True, blank=True)
-    size = models.CharField(choices=SIZE_CHOICES, max_length=1)
+    size = models.CharField(choices=SIZE_CHOICES, max_length=5)
     # stock = models.PositiveIntegerField(default=0)
 
     def __str__(self):
@@ -143,8 +148,6 @@ class OrderItem(models.Model):
         return total
     
  
-    
-    
 class Shipment(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True)

@@ -24,7 +24,8 @@
                   <img src="{{ orderitem.user_design.image.url }}" alt="Design Image"  class="design-image design1">
                 </div>
               {% else %}
-                <img src="{{ product_image.url }}" alt="Image" width="250" height="250">
+                <img src="{{ product_image.url }}"  alt="Image" width="250" height="250">
+                <div class="design-image placeholder1"></div>
               {% endif %}
             {% endif %}
           </label>
@@ -41,7 +42,8 @@
                 </div>
               {% else %}
                 <div class="image-container">
-                  <img src="{{ product_image.url }}" alt="Image" width="250" height="250">
+                  <img src="{{ product_image.url }}" class="placeholder p2" alt="Image" width="250" height="250">
+                  <div class="design-image placeholder2"></div>
                 </div>
               {% endif %}
             {% endif %}
@@ -59,7 +61,8 @@
                 </div>
               {% else %}
                 <div class="image-container">
-                  <img src="{{ product_image.url }}" alt="Image" width="250" height="250">
+                  <img src="{{ product_image.url }}" class="placeholder p3" alt="Image" width="250" height="250">
+                  <div class="design-image placeholder3"></div>
                 </div>
               {% endif %}
             {% endif %}
@@ -126,7 +129,6 @@
             {% endif %}
           </label>
         </div> 
-        <h1>ANJINGG</h1>
       </div>
     {% endif %}
   </div>

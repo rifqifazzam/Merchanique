@@ -147,3 +147,30 @@ button{
     background-color: #5D0374;
     color: #FEFEFE;
 }
+
+.placeholder1{
+    top: 30%;
+    left: 40%;
+    width:42px; 
+    height: 55px;
+    background-color: #D9D9D9;
+    opacity: 0.3;
+}
+
+.placeholder2{
+    top: 52%;
+    left: 49%;
+    width:116px; 
+    height:155px;
+    background-color: #D9D9D9;
+    opacity: 0.3;
+}
+
+.placeholder3{
+    top: 40%;
+    left: 50%;
+    width:105px; 
+    height:71px;
+    background-color: #D9D9D9;
+    opacity: 0.3;
+}
