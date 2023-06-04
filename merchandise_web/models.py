@@ -107,6 +107,9 @@ class Order(models.Model):
     def __str__(self):
         return str(self.id)
     
+    def getno():
+        return models.Model;
+    
     @property
     def get_cart_total(self):
         orderitems = self.orderitem_set.all()
@@ -136,6 +139,7 @@ class OrderItem(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
     user_design = models.ForeignKey(UserDesign, on_delete=models.SET_NULL, blank=True, null=True)
     size = models.CharField(max_length=50, blank=True, null=True) # New field for variant
+    order_id2 = models.CharField(max_length=200, null=True, blank=True)
 
     def __str__(self): 
         return str(self.id)
@@ -146,6 +150,8 @@ class OrderItem(models.Model):
         if self.user_design:
             total += self.user_design.price
         return total
+    
+    
     
  
 class Shipment(models.Model):

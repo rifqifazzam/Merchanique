@@ -1,0 +1,100 @@
+{% extends 'base.html'%}
+{% block title %}Admin{% endblock title %}
+{% block content %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static '/admin_page.css' %}">
+
+<div class ="container">
+
+    <div class="logout">
+        <form action=" " method="post">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+    
+    </div>
+
+    <div class="liveorder">
+        <p> Live Order </p>
+
+    </div>
+
+    <div class="isiliveorder">
+        <div class="kotakorder">
+            <div class="image1">
+                <img src="{% static 'img/icon-park_transaction-order.svg' %}" alt="img1" class="img1">
+            </div>
+            <div class="total1">
+                <div class="number1">
+                    <p>{{ total_orders }}</p>
+                </div>
+                <div class="status1">
+                    <p>Orders</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="kotaksent">
+            <div class="image2">
+                <img src="{% static 'img/mdi_truck-fast.svg' %}" alt="img2" class="img2">
+            </div>
+            <div class="total2">
+                <div class="number2">
+                    <p>{{ total_sent }}</p>  
+                </div>
+                <div class="status2">
+                    <p>Sent</p>
+                </div>
+            </div>
+        </div>
+        
+
+    </div>
+
+    <div class="order">
+        <p> Orders </p>
+
+    </div>
+
+    <div class="isiorder">
+        <div class="isiorder2">
+            <div class="namaisiorder">
+                <p>Order ID</p>
+                <p>Name</p>
+                <p>Email</p>
+                <p>Details</p>
+            </div>
+            {% for order in orders %}
+                {% if not order.shipment.tracking_number %}  <!-- Filter pesanan yang belum memiliki nomor resi -->
+                    <div class="detailorder">
+                        <p>{{ order.order_id }}</p>
+                        <p>{{ order.full_name }}</p>
+                        <p>{{ order.user.email }}</p>
+                        <form action="{% url 'order_detail' order.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="buttonorder">Details</button>
+                        </form>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock content %}

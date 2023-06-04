@@ -17,10 +17,18 @@ urlpatterns = [
     path('purchase/', views.purchase, name='purchase'),
     path('payment/<int:pk>/', views.payment, name='payment'),
     path('manage_orders/', views.manage_orders, name='manage_orders'),
-    path('order_detai/<int:pk>/', views.order_detail, name='order_detail'),
+    path('order_detail/<int:pk>/', views.order_detail, name='order_detail'),
     path('process_order/<int:pk>/', views.process_order, name='process_order'),
     path('design/<int:pk>/', views.design, name='design'),
     path('design/<int:pk1>/delete-image/<int:pk2>/', views.delete_design_image, name='delete_design_image'),
     path('design/<int:pk1>/delete-text/<int:pk2>/', views.delete_design_text, name='delete_design_text'),
     path('save_design/<int:pk>/', views.save_design, name='save_design'),
+    path('admin_page/', views.admin_page, name='admin_page'),
+
+
+
+
+
+
+
 ]

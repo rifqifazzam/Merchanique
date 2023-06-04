@@ -1,33 +1,124 @@
 {% extends 'base.html' %}
 {% block content %}
-<a  class="btn btn-outline-dark" href="{% url 'manage_orders' %}">&#x2190; Manage Orders</a>
-<h1>Order Detail - # {{ order.order_id }}</h1>
-<hr>
-{% for item in order.orderitem_set.all %}
-<p>Product: {{ item.product.name }}</p>
-<p>Quantity: {{ item.quantity }}</p>
-<p>Price: {{ item.product.price }}</p>
-<p>Total: {{ item.get_total }}</p>
-<hr>
-{% endfor %}
+{% load static %}
+<link rel="stylesheet" href="{% static '/order_detail.css' %}">
 
-<h3>Shipment Information</h3>
-<p>Shipping: {{ expedition.price}}</p>
-<p>Address: {{ shipment.address }}, {{shipment.province}}, {{ shipment.city }}</p>
-<p>ZIP: {{ shipment.zipcode }}</p>
-<hr>
-{% comment %} create a form to input a tracking number for the order.tracking number {% endcomment %}
-<form action="{% url 'process_order' order.id %}" method="post">
-    {% csrf_token %}
-    <input type="text" name="tracking_number" placeholder="Tracking Number" value="{{ shipment.tracking_number }}">
-    <hr>
-    {% comment %} if order.payment_status true just hide the mark as sent {% endcomment %}
-    {% if order.payment_status %}
-    <input type="submit" value="Mark as sent" disabled>
-    {% else %}
-    <input type="submit" value="Mark as sent">
-    {% endif %}
-</form>
+<div class="container">
+
+    <div class="back">
+        <a  class="btn btn-outline-dark" href="{% url 'admin_page' %}">Back to Order List</a>
+    </div>
+
+    <div class="nameorder">
+        <h1>Order Detail - # {{ order.order_id }}</h1>
+    </div>    
+    
+    <div class="isi">
+        
+        <div class="kotakorder">
+         <h2> Order </h2>
+        {% for item in order.orderitem_set.all %}
+
+            <div class="itemorder">
+                <div class="itemorderandqty">
+                    <div class="image">
+                        {% if item.product.image%}
+                        {% if item.user_design %}
+                        {% if item.user_design.design_option == 1%}
+                        
+                        <div class="image-container">
+                            <img class="cart-item-image" src="{{item.product.image.url}}" width="65" height="65">
+                            <img src="{{ item.user_design.image.url }}" alt="Design Image"  class="design-image design1">
+                        </div>
+                        
+                        {% elif item.user_design.design_option == 2%}
+                        <div class="image-container">
+                            <img class="cart-item-image" src="{{item.product.image.url}}" width="65" height="65">
+                            <img src="{{ item.user_design.image.url }}" alt="Design Image"  class="design-image design2">
+                        </div>
+                        
+                        {% elif item.user_design.design_option == 3%}
+                        <div class="image-container">
+                            <img class="cart-item-image" src="{{item.product.image.url}}" width="65" height="65">
+                            <img src="{{ item.user_design.image.url }}" alt="Design Image"  id="test" class="design-image design3">
+                        </div>
+                        
+                        {% else %}
+                            <img class="cart-item-image" src="{{ item.product.image.url }}" width="65" height="65">
+                        {% endif %}
+                        
+                        {% else %}
+                            <img class="cart-item-image" src="{{item.product.image.url}}" width="65" height="65">
+                        {% endif %}
+                        
+                        {% else %}
+                            <img class="cart-item-image" src="" width="65" height="65">
+                        {% endif %}
+                    </div>
+                    
+                    <div class="itemtittle">
+                        <div class="item1">
+                            <span class="cart-item-title">{{item.product.name}}</span>
+                            {% if item.user_design.image %}
+                            <span class="customized"> (Customized)</span>
+                            {% endif %}
+                        </div>
+                        <div class="item2">
+                            <p class="quantity">Qty: {{item.quantity}}</p>
+                            <p class="size">Size: {{item.size}}</p>
+                        </div>
+                    </div>
+                </div>
 
 
+                <div class="harga">
+                    <p>Rp{{item.get_total}}</p>
+                </div>
+
+            </div>
+
+            {% endfor %}
+        </div>
+            
+
+        <div class="shipping">
+            
+            <h3>Shipping Details</h3>
+            
+            <div class="shippingup">
+                <p><span>Shipping</span><span>{{ expedition.price}}</span></p>
+                <p><span>Total</span><span>Rp{{ order.get_total_payment }}</span></p>
+                <p><span>Courier Service</span><span>{{ order.expedition }}</span></p>
+            </div>
+            
+            <p class="address1">Address</p>
+
+            <div class="addressdetail">
+            <p>{{ shipment.address }}</p>
+            <p>{{ shipment.city }}, {{shipment.province}}</p>
+            <p>ZIP: {{ shipment.zipcode }}</p>
+            </div>
+            
+            {% comment %} create a form to input a tracking number for the order.tracking number {% endcomment %}
+            <div class="fatha">
+                <p> Expedition receipt number </p>
+                <form action="{% url 'process_order' order.id %}" method="post">
+                    {% csrf_token %}
+                    <div class="kolom">
+                        <input type="text" name="tracking_number" placeholder="Tracking Number" value="{{ shipment.tracking_number }}" class ="inputresi">
+                        
+                        {% comment %} if order.payment_status true just hide the mark as sent {% endcomment %}
+                    </div>
+                    <div class="tombol">
+                        {% if order.payment_status %}
+                        <input type="submit" class="tombol2" value="Mark as sent" disabled>
+                        {% else %}
+                        <input type="submit" class="tombol2" value="Mark as sent">
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}

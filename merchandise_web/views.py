@@ -16,6 +16,8 @@ from django.shortcuts import render, get_object_or_404
 
 
 
+
+
 # Create your views here.
 def register(request):
     if request.method == 'POST':
@@ -350,7 +352,6 @@ def checkout(request):
         province = request.POST['province']
         zipcode = request.POST['zipcode']
 
-        
         order, created = Order.objects.get_or_create(user=user, complete=False)
         Shipment.objects.create(
             order=order,
@@ -380,10 +381,18 @@ def checkout(request):
         order.phone = phone
         order.address = address
         order.email = email
-        
+
         order.complete = True
+
+        for order_item in order.orderitem_set.all():
+            order_item.order_id2 = order.order_id
+
+        order.orderitem_set.update(order_id2=order.order_id)
+
         order.save()
+
         return redirect('purchase')
+
 
 @login_required(login_url='login')
 def purchase(request):
@@ -407,6 +416,8 @@ def payment(request, pk):
     # get hthe order by the user request
     user = request.user
     order = Order.objects.get(id=pk)
+    if request.method == 'POST':
+        order_id = request.POST['order_id']
     context = {'order': order}
     
     return render(request, 'payment.html', context)
@@ -422,14 +433,6 @@ def manage_orders(request):
     context = {'orders': orders, 'total_sent': total_sent, 'total_unpaid': total_unpaid}
     return render(request, 'manage_orders.html', context)
 
-@user_passes_test(lambda u: u.is_superuser)
-def order_detail(request, pk):
-    order = Order.objects.get(id=pk)
-    shipment = Shipment.objects.get(order=order)
-    # get the expedition object
-    expedition = Expedition.objects.get(id=order.expedition.id)
-    context = {'order': order, 'shipment': shipment, 'expedition': expedition}
-    return render(request, 'order_detail.html', context)
 
 # Make a process order
 @user_passes_test(lambda u: u.is_superuser)
@@ -443,7 +446,7 @@ def process_order(request, pk):
           
         order.save()
         shipment.save()
-        return redirect('manage_orders')
+        return redirect('admin_page')
     
 @login_required(login_url='login')
 def design(request, pk):
@@ -533,8 +536,36 @@ def save_design(request,pk):
 
 
 
+def admin_page(request):
+    orders = Order.objects.exclude(shipment__tracking_number__isnull=False).exclude(full_name__exact='')
+    total_orders = orders.count()
+    total_sent = Order.objects.filter(shipment__tracking_number__isnull=False).count()
     
-    # else:
-    #     # if not a POST request, display the design page with the order item
-    #     context = {'orderitem': orderitem} 
-    #     return render(request, 'design.html', context)
+    context = {
+        'orders': orders,
+        'total_orders': total_orders,
+        'total_sent': total_sent
+    }
+    
+    return render(request, 'admin_page.html', context)
+
+
+
+
+def order_detail(request, pk):
+    order = Order.objects.get(id=pk)
+    shipment = Shipment.objects.filter(order=order).first()
+    # get the expedition object
+    expedition = Expedition.objects.get(id=order.expedition.id)
+    context = {'order': order, 'shipment': shipment, 'expedition': expedition}
+    return render(request, 'order_detail.html', context)
+
+
+
+
+
+
+
+
+
+
