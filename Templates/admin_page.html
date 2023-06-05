@@ -10,7 +10,8 @@
     <div class="logout">
         <form action=" " method="post">
             {% csrf_token %}
-            <button type="submit">Logout</button>
+            <button type="submit" ><a href="{% url 'logout' %}" class="logout-a">Keluar</a></button>
+
         </form>
     
     </div>
@@ -65,9 +66,10 @@
                 <p>Email</p>
                 <p>Details</p>
             </div>
+            <div class="order-grid">
             {% for order in orders %}
                 {% if not order.shipment.tracking_number %}  <!-- Filter pesanan yang belum memiliki nomor resi -->
-                    <div class="detailorder">
+                    <div class="detailorder">    
                         <p>{{ order.order_id }}</p>
                         <p>{{ order.full_name }}</p>
                         <p>{{ order.user.email }}</p>
@@ -78,6 +80,7 @@
                     </div>
                 {% endif %}
             {% endfor %}
+            </div>
         </div>
     </div>
 

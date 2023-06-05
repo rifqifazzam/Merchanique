@@ -39,7 +39,10 @@ def register(request):
 def loginview(request):
     form = UserCreationForm(request.POST)
     if request.user.is_authenticated:
-        return redirect('homepage')
+        if request.user.is_staff:  
+            return redirect('admin_page')
+        else:
+            return redirect('homepage')
     
     if request.method == 'POST':
         username = request.POST['username']
@@ -47,7 +50,11 @@ def loginview(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('homepage')
+            if request.user.is_staff:  
+                return redirect('admin_page')
+            else:
+                return redirect('homepage')
+
         else:
             messages.info(request, f'Username OR password is incorrect')
             return render(request, 'login.html')

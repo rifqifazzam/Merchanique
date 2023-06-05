@@ -105,9 +105,9 @@ h3{
 }
 
 .addressdetail{
-background: #FFFFFF;
-border-radius: 10px;
-padding: 10px 10px;
+    background: #FFFFFF;
+    border-radius: 10px;
+    padding: 10px 10px;
 
 }
 
@@ -155,10 +155,16 @@ padding: 10px 10px;
     justify-content: center;
     align-items: center;
     height: 40px;
+    cursor: pointer;
 }
 
 .tombol{
     display: flex;
     align-items: center;
     margin-top: 15px;
+}
+
+
+button{
+    cursor: pointer;
 }
