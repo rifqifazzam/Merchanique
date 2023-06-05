@@ -39,7 +39,12 @@
     align-items: center;
     justify-content: space-between;
     padding-top:0px;
-    margin-right: 0;   
+       
+}
+
+.buttontambah p{
+    margin-right: 5px;
+    margin-left: 5px;
 }
 
 .gambarharga{
@@ -130,7 +135,7 @@ span.cart-item-title
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 border-radius: 10px;
 margin-bottom: 10px;
-width: 72px;
+width: 105px;
 height: 30px;
 align-items: center;
 padding: 0px 6px;
